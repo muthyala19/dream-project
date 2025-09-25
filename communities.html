@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CommunityLiner | Social Platform</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #64748b;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+            --border-color: #e2e8f0;
+            --hover-color: #f1f5f9;
+            --card-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fafafa;
+            color: var(--dark-color);
+            font-weight: 400;
+            line-height: 1.6;
+            padding-top: 70px;
+        }
+        
+        /* Thin, liner-inspired elements */
+        .thin-border {
+            border: 1px solid var(--border-color);
+        }
+        
+        .ultra-thin {
+            border-width: 0.5px;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: white;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        
+        .navbar-brand {
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: var(--dark-color);
+        }
+        
+        .nav-link {
+            font-weight: 400;
+            font-size: 0.95rem;
+            padding: 0.5rem 0.8rem !important;
+            color: var(--secondary-color);
+            transition: all 0.2s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-link.active {
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        /* Profile image */
+        .profile-img {
+            width: 36px;
+            height: 36px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .community-card {
+            height: 100%;
+        }
+        
+        .post-card {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Buttons */
+        .btn {
+            border-radius: 6px;
+            font-weight: 500;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-outline-primary {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-sm {
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+        }
+        
+        /* View toggles */
+        .view-toggle {
+            color: var(--secondary-color);
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .view-toggle.active {
+            color: var(--primary-color);
+            background-color: var(--hover-color);
+        }
+        
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .slide-in {
+            animation: slideIn 0.4s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* Post interaction */
+        .interaction-btn {
+            color: var(--secondary-color);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .interaction-btn:hover {
+            background-color: var(--hover-color);
+            color: var(--primary-color);
+        }
+        
+        /* Search box */
+        .search-box {
+            position: relative;
+        }
+        
+        .search-input {
+            border-radius: 20px;
+            padding-left: 40px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+            background-color: var(--light-color);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary-color);
+        }
+        
+        /* Content area */
+        .content-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--card-shadow);
+        }
+        
+        /* Create post */
+        .create-post {
+            cursor: pointer;
+            border: 1px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            transition: all 0.2s ease;
+        }
+        
+        .create-post:hover {
+            border-color: var(--primary-color);
+            background-color: var(--hover-color);
+        }
+        
+        /* Grid view adjustments */
+        .grid-view .post-card {
+            height: 100%;
+        }
+        
+        /* Utility classes */
+        .text-xs {
+            font-size: 0.75rem;
+        }
+        
+        .text-sm {
+            font-size: 0.85rem;
+        }
+        
+        .text-md {
+            font-size: 0.95rem;
+        }
+        
+        .text-light-gray {
+            color: #94a3b8;
+        }
+        
+        .hover-lift {
+            transition: transform 0.2s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">CommunityLiner</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Communities</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Explore</a>
+                    </li>
+                </ul>
+                
+                <div class="search-box me-3">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="form-control search-input" placeholder="Search communities and posts">
+                </div>
+                
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle" id="notifDropdown" data-bs-toggle="dropdown">
+                            <i class="far fa-bell text-secondary"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">No notifications</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="dropdown ms-3">
+                        <a href="#" class="dropdown-toggle d-flex align-items-center" id="profileDropdown" data-bs-toggle="dropdown">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80" class="profile-img">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Left sidebar (Communities) -->
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="content-section">
+                    <h6 class="mb-3">Your Communities</h6>
+                    
+                    <div class="list-group list-group-flush">
+                        <a href="#" class="list-group-item list-group-item-action border-0 px-0 py-2 d-flex align-items-center">
+                            <img src="https://images.unsplash.com/photo-1614689540268-6b5c0d74d7ba?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=60&q=80" class="rounded-circle me-2" width="24" height="24">
+                            <span class="text-sm">Design Enthusiasts</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action border-0 px-0 py-2 d-flex align-items-center">
+                            <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=60&q=80" class="rounded-circle me-2" width="24" height="24">
+                            <span class="text-sm">Photography</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action border-0 px-0 py-2 d-flex align-items-center">
+                            <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=60&q=80" class="rounded-circle me-2" width="24" height="24">
+                            <span class="text-sm">Tech Talk</span>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action border-0 px-0 py-2 d-flex align-items-center">
+                            <img src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=60&q=80" class="rounded-circle me-2" width="24" height="24">
+                            <span class="text-sm">Travelers</span>
+                        </a>
+                    </div>
+                    
+                    <button class="btn btn-outline-primary w-100 mt-3">
+                        <i class="fas fa-plus me-1"></i> Discover More
+                    </button>
+                </div>
+                
+                <div class="content-section mt-3">
+                    <h6 class="mb-3">Trending Communities</h6>
+                    
+                    <div class="list-group list-group-flush">
+                        <a href="#" class="list-group-item list-group-item-action border-0 px-0 py-2">
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-primary me-2">1</span>
+                                <span class="text-sm">Digital Art</span>
+                            </div>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action border-0 px-0 py-2">
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-primary me-2">2</span>
+                                <span class="text-sm">Web Development</span>
+                            </div>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action border-0 px-0 py-2">
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-primary me-2">3</span>
+                                <span class="text-sm">Minimalist Design</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main content -->
+            <div class="col-lg-6 col-md-8">
+                <!-- Create post -->
+                <div class="content-section create-post fade-in" data-bs-toggle="modal" data-bs-target="#createPostModal">
+                    <div class="d-flex align-items-center">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80" class="profile-img me-3">
+                        <span class="text-light-gray">Share something with your communities...</span>
+                    </div>
+                </div>
+                
+                <!-- View toggles -->
+                <div class="d-flex justify-content-between align-items-center content-section mt-3">
+                    <h6 class="mb-0">Recent Posts</h6>
+                    <div class="d-flex">
+                        <div class="view-toggle active me-2" id="listViewToggle">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        <div class="view-toggle" id="gridViewToggle">
+                            <i class="fas fa-th-large"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Posts (List View) -->
+                <div id="postListView">
+                    <!-- Post 1 -->
+                    <div class="content-section post-card slide-in">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80" class="profile-img me-2">
+                            <div class="d-flex flex-column">
+                                <span class="text-sm fw-medium">Michael Chen</span>
+                                <span class="text-xs text-light-gray">in Design Enthusiasts · 2 hrs ago</span>
+                            </div>
+                        </div>
+                        
+                        <h6 class="fw-medium">Minimalist design principles for modern interfaces</h6>
+                        <p class="text-sm">I've been exploring how minimalist design can improve user experience while maintaining functionality. Here are some key principles I've found essential...</p>
+                        
+                        <div class="post-image mb-3">
+                            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" class="img-fluid rounded" alt="Design example">
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex">
+                                <div class="interaction-btn me-2">
+                                    <i class="far fa-heart me-1"></i> 42
+                                </div>
+                                <div class="interaction-btn me-2">
+                                    <i class="far fa-comment me-1"></i> 7
+                                </div>
+                            </div>
+                            <div class="interaction-btn">
+                                <i class="far fa-bookmark"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Post 2 -->
+                    <div class="content-section post-card slide-in">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80" class="profile-img me-2">
+                            <div class="d-flex flex-column">
+                                <span class="text-sm fw-medium">Sarah Johnson</span>
+                                <span class="text-xs text-light-gray">in Photography · 5 hrs ago</span>
+                            </div>
+                        </div>
+                        
+                        <h6 class="fw-medium">Capturing urban landscapes at golden hour</h6>
+                        <p class="text-sm">Golden hour provides the perfect lighting conditions for urban photography. Here are some tips for making the most of this magical time of day...</p>
+                        
+                        <div class="post-image mb-3">
+                            <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" class="img-fluid rounded" alt="Urban landscape">
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex">
+                                <div class="interaction-btn me-2">
+                                    <i class="far fa-heart me-1"></i> 28
+                                </div>
+                                <div class="interaction-btn me-2">
+                                    <i class="far fa-comment me-1"></i> 3
+                                </div>
+                            </div>
+                            <div class="interaction-btn">
+                                <i class="far fa-bookmark"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Posts (Grid View - Hidden by default) -->
+                <div id="postGridView" class="row d-none">
+                    <div class="col-md-6 mb-3">
+                        <div class="content-section post-card h-100">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80" class="profile-img me-2">
+                                <div class="d-flex flex-column">
+                                    <span class="text-sm fw-medium">Michael Chen</span>
+                                    <span class="text-xs text-light-gray">2 hrs ago</span>
+                                </div>
+                            </div>
+                            
+                            <h6 class="fw-medium">Minimalist design principles</h6>
+                            <p class="text-sm">I've been exploring how minimalist design can improve user experience while maintaining functionality...</p>
+                            
+                            <div class="post-image mb-3">
+                                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" class="img-fluid rounded" alt="Design example">
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <div class="interaction-btn me-2">
+                                        <i class="far fa-heart me-1"></i> 42
+                                    </div>
+                                    <div class="interaction-btn me-2">
+                                        <i class="far fa-comment me-1"></i> 7
+                                    </div>
+                                </div>
+                                <div class="interaction-btn">
+                                    <i class="far fa-bookmark"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <div class="content-section post-card h-100">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80" class="profile-img me-2">
+                                <div class="d-flex flex-column">
+                                    <span class="text-sm fw-medium">Sarah Johnson</span>
+                                    <span class="text-xs text-light-gray">5 hrs ago</span>
+                                </div>
+                            </div>
+                            
+                            <h6 class="fw-medium">Urban landscapes at golden hour</h6>
+                            <p class="text-sm">Golden hour provides the perfect lighting conditions for urban photography. Here are some tips...</p>
+                            
+                            <div class="post-image mb-3">
+                                <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" class="img-fluid rounded" alt="Urban landscape">
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <div class="interaction-btn me-2">
+                                        <i class="far fa-heart me-1"></i> 28
+                                    </div>
+                                    <div class="interaction-btn me-2">
+                                        <i class="far fa-comment me-1"></i> 3
+                                    </div>
+                                </div>
+                                <div class="interaction-btn">
+                                    <i class="far fa-bookmark"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right sidebar -->
+            <div class="col-lg-3 col-md-4">
+                <div class="content-section">
+                    <h6 class="mb-3">Community Guidelines</h6>
+                    <ul class="list-unstyled text-sm">
+                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Be respectful</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Stay on topic</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Credit sources</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-primary me-2"></i> No self-promotion</li>
+                    </ul>
+                </div>
+                
+                <div class="content-section mt-3">
+                    <h6 class="mb-3">Upcoming Events</h6>
+                    <div class="card mb-2 ultra-thin">
+                        <div class="card-body py-2">
+                            <div class="d-flex">
+                                <div class="bg-primary text-white text-center me-3" style="width: 40px; border-radius: 4px;">
+                                    <div class="fw-bold">20</div>
+                                    <div class="text-xs">OCT</div>
+                                </div>
+                                <div>
+                                    <div class="text-sm fw-medium">Design Meetup</div>
+                                    <div class="text-xs text-light-gray">Online · 6:00 PM</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card ultra-thin">
+                        <div class="card-body py-2">
+                            <div class="d-flex">
+                                <div class="bg-primary text-white text-center me-3" style="width: 40px; border-radius: 4px;">
+                                    <div class="fw-bold">25</div>
+                                    <div class="text-xs">OCT</div>
+                                </div>
+                                <div>
+                                    <div class="text-sm fw-medium">Photo Walk</div>
+                                    <div class="text-xs text-light-gray">Central Park · 9:00 AM</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create Post Modal -->
+    <div class="modal fade" id="createPostModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Select Community</label>
+                            <select class="form-select">
+                                <option selected>Design Enthusiasts</option>
+                                <option>Photography</option>
+                                <option>Tech Talk</option>
+                                <option>Travelers</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" placeholder="Add a title">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Content</label>
+                            <textarea class="form-control" rows="5" placeholder="What would you like to share?"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Add Image (Optional)</label>
+                            <input type="file" class="form-control">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // View toggle functionality
+            $("#listViewToggle").click(function() {
+                $("#postListView").removeClass("d-none");
+                $("#postGridView").addClass("d-none");
+                $("#listViewToggle").addClass("active");
+                $("#gridViewToggle").removeClass("active");
+            });
+            
+            $("#gridViewToggle").click(function() {
+                $("#postListView").addClass("d-none");
+                $("#postGridView").removeClass("d-none");
+                $("#listViewToggle").removeClass("active");
+                $("#gridViewToggle").addClass("active");
+            });
+            
+            // Smooth animations for elements
+            $('.card').hover(
+                function() {
+                    $(this).css('transform', 'translateY(-2px)');
+                },
+                function() {
+                    $(this).css('transform', 'translateY(0)');
+                }
+            );
+            
+            // Simulate loading animation
+            setTimeout(function() {
+                $('.slide-in').css('opacity', '1');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

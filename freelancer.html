@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreelanceHub | Find Top Talent</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --dark-color: #212529;
+            --light-color: #f8f9fa;
+            --gray-color: #6c757d;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark-color);
+            background-color: #fdfdfd;
+            padding-top: 56px;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            background-color: white;
+            transition: var(--transition);
+        }
+        
+        .navbar-brand {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(58, 134, 255, 0.2);
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                        url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .post-card {
+            cursor: pointer;
+        }
+        
+        .post-image {
+            height: 200px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .post-card:hover .post-image {
+            transform: scale(1.05);
+        }
+        
+        .category-badge {
+            background-color: var(--light-color);
+            color: var(--gray-color);
+            font-weight: 500;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .post-detail-image {
+            height: 350px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+        
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-rocket me-2"></i>FreelanceHub
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Browse Jobs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Freelancers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">How It Works</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="#" class="btn btn-outline-secondary me-2">Sign In</a>
+                    <a href="#" class="btn btn-primary">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h1 class="display-4 fw-bold mb-4">Find the perfect freelance services for your business</h1>
+                    <p class="lead mb-5">Connect with skilled freelancers worldwide to get your projects done</p>
+                    
+                    <div class="search-box">
+                        <div class="input-group mb-3 shadow-lg rounded-pill">
+                            <input type="text" class="form-control border-0 rounded-pill py-3 px-4" placeholder="Search for services...">
+                            <button class="btn btn-primary rounded-pill px-4 py-3" type="button">
+                                <i class="fas fa-search me-2"></i>Search
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
+                        <span class="text-muted">Popular:</span>
+                        <a href="#" class="text-decoration-none me-3">Web Design</a>
+                        <a href="#" class="text-decoration-none me-3">Logo Design</a>
+                        <a href="#" class="text-decoration-none me-3">WordPress</a>
+                        <a href="#" class="text-decoration-none">Content Writing</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Posts -->
+    <section class="container mb-5">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="row">
+            <!-- Post 1 -->
+            <div class="col-md-4 mb-4 fade-in">
+                <div class="card post-card">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1015&q=80" class="card-img-top post-image" alt="Web Design Project">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="category-badge">Web Design</span>
+                            <span class="text-primary fw-bold">$850</span>
+                        </div>
+                        <h5 class="card-title">Modern E-commerce Website Design</h5>
+                        <p class="card-text text-muted">Looking for a skilled web designer to create a modern e-commerce platform with clean UI.</p>
+                        <div class="d-flex align-items-center mt-4">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" class="user-avatar me-2" alt="Client">
+                            <div>
+                                <h6 class="mb-0">Michael Chen</h6>
+                                <small class="text-muted">New York, USA</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Post 2 -->
+            <div class="col-md-4 mb-4 fade-in">
+                <div class="card post-card">
+                    <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" class="card-img-top post-image" alt="Mobile App Project">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="category-badge">Mobile App</span>
+                            <span class="text-primary fw-bold">$1,200</span>
+                        </div>
+                        <h5 class="card-title">Fitness Tracking iOS Application</h5>
+                        <p class="card-text text-muted">Need an experienced iOS developer to create a fitness tracking app with health data integration.</p>
+                        <div class="d-flex align-items-center mt-4">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1376&q=80" class="user-avatar me-2" alt="Client">
+                            <div>
+                                <h6 class="mb-0">Sarah Johnson</h6>
+                                <small class="text-muted">London, UK</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Post 3 -->
+            <div class="col-md-4 mb-4 fade-in">
+                <div class="card post-card">
+                    <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" class="card-img-top post-image" alt="Logo Design Project">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="category-badge">Logo Design</span>
+                            <span class="text-primary fw-bold">$300</span>
+                        </div>
+                        <h5 class="card-title">Modern Logo for Tech Startup</h5>
+                        <p class="card-text text-muted">Seeking a talented designer to create a clean, modern logo for our AI technology company.</p>
+                        <div class="d-flex align-items-center mt-4">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" class="user-avatar me-2" alt="Client">
+                            <div>
+                                <h6 class="mb-0">David Wilson</h6>
+                                <small class="text-muted">San Francisco, USA</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="#" class="btn btn-outline-primary px-4 py-2">View All Projects</a>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="container mb-5">
+        <h2 class="section-title text-center">How It Works</h2>
+        <div class="row">
+            <div class="col-md-4 text-center fade-in">
+                <div class="card border-0 bg-light">
+                    <div class="card-body py-5">
+                        <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
+                            <i class="fas fa-pencil-alt text-white fa-2x"></i>
+                        </div>
+                        <h4>1. Post a Project</h4>
+                        <p class="text-muted">Create a detailed project description and set your budget and timeline.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 text-center fade-in">
+                <div class="card border-0 bg-light">
+                    <div class="card-body py-5">
+                        <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
+                            <i class="fas fa-user-friends text-white fa-2x"></i>
+                        </div>
+                        <h4>2. Hire Freelancers</h4>
+                        <p class="text-muted">Review proposals, compare profiles, and hire the best freelancer for your project.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 text-center fade-in">
+                <div class="card border-0 bg-light">
+                    <div class="card-body py-5">
+                        <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
+                            <i class="fas fa-tasks text-white fa-2x"></i>
+                        </div>
+                        <h4>3. Get Work Done</h4>
+                        <p class="text-muted">Collaborate securely through our platform and release payment when work is completed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- View Post Example -->
+    <section class="container mb-5" id="post-detail" style="display: none;">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <button class="btn btn-outline-secondary mb-4" id="back-to-list">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Projects
+                </button>
+                
+                <div class="card border-0">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1015&q=80" class="post-detail-image" alt="Project Detail">
+                    
+                    <div class="card-body px-0 pt-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <span class="category-badge">Web Design</span>
+                            <span class="text-primary fw-bold display-6">$850</span>
+                        </div>
+                        
+                        <h1 class="mb-4">Modern E-commerce Website Design</h1>
+                        <p class="lead">Looking for a skilled web designer to create a modern e-commerce platform with clean UI and excellent user experience.</p>
+                        
+                        <div class="d-flex align-items-center mb-5 mt-4">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" class="user-avatar me-3" alt="Client" style="width: 60px; height: 60px;">
+                            <div>
+                                <h4 class="mb-0">Michael Chen</h4>
+                                <p class="text-muted mb-0">New York, USA</p>
+                                <div class="d-flex text-warning mt-1">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span class="text-dark ms-2">4.7 (12 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="mb-3">Project Description</h3>
+                        <p>We are a startup looking to build a modern e-commerce website for our sustainable products line. The website should have a clean, minimalist design that reflects our brand values of sustainability and quality.</p>
+                        
+                        <p>We need the following pages:</p>
+                        <ul>
+                            <li>Homepage with featured products</li>
+                            <li>Product listing page with filters</li>
+                            <li>Product detail pages</li>
+                            <li>Shopping cart and checkout</li>
+                            <li>About us and contact pages</li>
+                        </ul>
+                        
+                        <p>The design should be responsive and work well on all devices. We have a brand guide with colors and fonts that we will provide to the selected freelancer.</p>
+                        
+                        <h3 class="mb-3">Skills Required</h3>
+                        <div class="d-flex flex-wrap gap-2 mb-4">
+                            <span class="category-badge">UI/UX Design</span>
+                            <span class="category-badge">Web Design</span>
+                            <span class="category-badge">E-commerce</span>
+                            <span class="category-badge">Responsive Design</span>
+                            <span class="category-badge">Figma</span>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary btn-lg py-3">Apply Now</button>
+                            <button class="btn btn-outline-secondary">Save Project</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4 class="mb-4">FreelanceHub</h4>
+                    <p class="text-muted">Connecting businesses with talented freelancers worldwide. Get your projects done quickly and efficiently.</p>
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="mb-4">For Clients</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">How to Hire</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Talent Marketplace</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Project Catalog</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Enterprise Solutions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="mb-4">For Freelancers</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">How to Find Work</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Create Profile</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Learn Freelancing</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Membership</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="mb-4">Stay Updated</h5>
+                    <p class="text-muted">Subscribe to our newsletter to get updates on new features and projects.</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Your email address">
+                        <button class="btn btn-primary">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-4 bg-light">
+            
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="text-muted mb-0">&copy; 2023 FreelanceHub. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-muted text-decoration-none me-3">Terms of Service</a>
+                    <a href="#" class="text-muted text-decoration-none me-3">Privacy Policy</a>
+                    <a href="#" class="text-muted text-decoration-none">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Fade in elements on scroll
+            function checkFade() {
+                $('.fade-in').each(function() {
+                    var bottom_of_element = $(this).offset().top + $(this).outerHeight()/3;
+                    var bottom_of_window = $(window).scrollTop() + $(window).height();
+                    
+                    if (bottom_of_window > bottom_of_element) {
+                        $(this).addClass('active');
+                    }
+                });
+            }
+            
+            checkFade();
+            $(window).scroll(function() {
+                checkFade();
+            });
+            
+            // Smooth scrolling for anchor links
+            $('a[href^="#"]').on('click', function(e) {
+                e.preventDefault();
+                var target = this.hash;
+                var $target = $(target);
+                $('html, body').animate({
+                    'scrollTop': $target.offset().top - 70
+                }, 800, 'swing');
+            });
+            
+            // Post card click to view detail
+            $('.post-card').on('click', function() {
+                $('.container:not(#post-detail)').fadeOut(400, function() {
+                    $('#post-detail').fadeIn(600);
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 500);
+                });
+            });
+            
+            // Back to list button
+            $('#back-to-list').on('click', function() {
+                $('#post-detail').fadeOut(400, function() {
+                    $('.container:not(#post-detail)').fadeIn(600);
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 500);
+                });
+            });
+            
+            // Navbar background change on scroll
+            $(window).scroll(function() {
+                if ($(window).scrollTop() > 50) {
+                    $('.navbar').addClass('shadow-sm');
+                } else {
+                    $('.navbar').removeClass('shadow-sm');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
