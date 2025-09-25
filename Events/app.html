@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Achiever</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary-color: rgba(86, 124, 228, 0.7);
+            --secondary-color: rgba(136, 96, 208, 0.7);
+            --dark-color: rgba(33, 33, 33, 0.7);
+            --light-color: rgba(255, 255, 255, 0.2);
+            --success-color: rgba(76, 175, 80, 0.7);
+            --warning-color: rgba(255, 193, 7, 0.7);
+            --danger-color: rgba(244, 67, 54, 0.7);
+            --info-color: rgba(3, 169, 244, 0.7);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            color: #fff;
+            padding: 20px 0;
+            min-height: 100vh;
+        }
+        
+        .app-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .app-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .app-header h1 {
+            font-weight: 700;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            margin-bottom: 5px;
+        }
+        
+        .app-header p {
+            opacity: 0.8;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .glass-card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+        }
+        
+        .glass-card h2 i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .task-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .task-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .task-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        .deadline {
+            background: var(--danger-color);
+        }
+        
+        .dreams {
+            background: var(--info-color);
+        }
+        
+        .networks {
+            background: var(--success-color);
+        }
+        
+        .thinks-y {
+            background: var(--warning-color);
+        }
+        
+        .do-new {
+            background: var(--primary-color);
+        }
+        
+        .do-small {
+            background: var(--secondary-color);
+        }
+        
+        .thinks-big {
+            background: var(--info-color);
+        }
+        
+        .ideas {
+            background: var(--success-color);
+        }
+        
+        .add-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .add-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .task-input {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 8px;
+            padding: 8px 12px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .task-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Animation for cards */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .glass-card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* Delay for each card */
+        .glass-card:nth-child(1) { animation-delay: 0.1s; }
+        .glass-card:nth-child(2) { animation-delay: 0.2s; }
+        .glass-card:nth-child(3) { animation-delay: 0.3s; }
+        .glass-card:nth-child(4) { animation-delay: 0.4s; }
+        .glass-card:nth-child(5) { animation-delay: 0.5s; }
+        .glass-card:nth-child(6) { animation-delay: 0.6s; }
+        .glass-card:nth-child(7) { animation-delay: 0.7s; }
+        .glass-card:nth-child(8) { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="app-header">
+            <h1>Dream Achiever</h1>
+            <p>Your personal goal tracking app</p>
+        </div>
+        
+        <!-- Dead Line Section -->
+        <div class="glass-card deadline">
+            <h2><i class="fas fa-hourglass-end"></i> Dead Line</h2>
+            <div class="task-list">
+                <div class="task-item">
+                    <input type="checkbox" id="deadline1">
+                    <label for="deadline1">Complete project proposal</label>
+                </div>
+                <div class="task-item">
+                    <input type="checkbox" id="deadline2">
+                    <label for="deadline2">Submit monthly report</label>
+                </div>
+            </div>
+            <button class="add-btn">+</button>
+        </div>
+        
+        <!-- Write Dreams Section -->
+        <div class="glass-card dreams">
+            <h2><i class="fas fa-dream"></i> Write Dreams</h2>
+            <div class="task-list">
+                <div class="task-item">
+                    <input type="checkbox" id="dream1">
+                    <label for="dream1">Travel to Japan</label>
+                </div>
+                <div class="task-item">
+                    <input type="checkbox" id="dream2">
+                    <label for="dream2">Learn to play guitar</label>
+                </div>
+            </div>
+            <button class="add-btn">+</button>
+        </div>
+        
+        <!-- Find Networks and People Section -->
+        <div class="glass-card networks">
+            <h2><i class="fas fa-users"></i> Find Networks & People</h2>
+            <div class="task-list">
+                <div class="task-item">
+                    <input type="checkbox" id="network1">
+                    <label for="network1">Attend tech conference</label>
+                </div>
+                <div class="task-item">
+                    <input type="checkbox" id="network2">
+                    <label for="network2">Connect with industry leaders on LinkedIn</label>
+                </div>
+            </div>
+            <button class="add-btn">+</button>
+        </div>
+        
+        <!-- Thinks Y Section -->
+        <div class="glass-card thinks-y">
+            <h2><i class="fas fa-lightbulb"></i> Thinks Y</h2>
+            <div class="task-list">
+                <div class="task-item">
+                    <input type="checkbox" id="think1">
+                    <label for="think1">Why does this process work this way?</label>
+                </div>
+                <div class="task-item">
+                    <input type="checkbox" id="think2">
+                    <label for="think2">What if we approached this differently?</label>
+                </div>
+            </div>
+            <button class="add-btn">+</button>
+        </div>
+        
+        <!-- DO NEW Section -->
+        <div class="glass-card do-new">
+            <h2><i class="fas fa-rocket"></i> DO NEW</h2>
+            <div class="task-list">
+                <div class="task-item">
+                    <input type="checkbox" id="new1">
+                    <label for="new1">Try a new productivity method</label>
+                </div>
+                <div class="task-item">
+                    <input type="checkbox" id="new2">
+                    <label for="new2">Learn a new programming language</label>
+                </div>
+            </div>
+            <button class="add-btn">+</button>
+        </div>
+        
+        <!-- DO Small - Every day Section -->
+        <div class="glass-card do-small">
+            <h2><i class="fas fa-calendar-day"></i> DO Small - Every day</h2>
+            <div class="task-list">
+                <div class="task-item">
+                    <input type="checkbox" id="small1">
+                    <label for="small1">Read for 20 minutes</label>
+                </div>
+                <div class="task-item">
+                    <input type="checkbox" id="small2">
+                    <label for="small2">Exercise for 30 minutes</label>
+                </div>
+            </div>
+            <button class="add-btn">+</button>
+        </div>
+        
+        <!-- Thinks Big Section -->
+        <div class="glass-card thinks-big">
+            <h2><i class="fas fa-globe"></i> Thinks Big</h2>
+            <div class="task-list">
+                <div class="task-item">
+                    <input type="checkbox" id="big1">
+                    <label for="big1">Start my own business</label>
+                </div>
+                <div class="task-item">
+                    <input type="checkbox" id="big2">
+                    <label for="big2">Write a book</label>
+                </div>
+            </div>
+            <button class="add-btn">+</button>
+        </div>
+        
+        <!-- List ideas Section -->
+        <div class="glass-card ideas">
+            <h2><i class="fas fa-lightbulb"></i> List ideas</h2>
+            <div class="task-list">
+                <div class="task-item">
+                    <input type="checkbox" id="idea1">
+                    <label for="idea1">Mobile app for habit tracking</label>
+                </div>
+                <div class="task-item">
+                    <input type="checkbox" id="idea2">
+                    <label for="idea2">Online course platform</label>
+                </div>
+            </div>
+            <button class="add-btn">+</button>
+        </div>
+        
+        <div class="footer">
+            <p>Dream Achiever App &copy; 2023</p>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Add new task item when + button is clicked
+            $('.add-btn').click(function() {
+                const card = $(this).closest('.glass-card');
+                const taskList = card.find('.task-list');
+                const taskCount = taskList.children('.task-item').length + 1;
+                
+                const newTask = $(`
+                    <div class="task-item">
+                        <input type="checkbox" id="task${taskCount}">
+                        <input type="text" class="task-input" placeholder="Add new task...">
+                    </div>
+                `);
+                
+                taskList.append(newTask);
+            });
+            
+            // Toggle task completion
+            $('.task-list').on('change', 'input[type="checkbox"]', function() {
+                const taskItem = $(this).closest('.task-item');
+                if ($(this).is(':checked')) {
+                    taskItem.css('opacity', '0.6');
+                    taskItem.css('text-decoration', 'line-through');
+                } else {
+                    taskItem.css('opacity', '1');
+                    taskItem.css('text-decoration', 'none');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
