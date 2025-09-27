@@ -95,6 +95,10 @@ and show client profile view, create profile / for client and skilled person, pr
 add search, it looks like freelancer site but not exact it should like connected to the client and skilled
 add good colors dark some where light and use thin elements, try to low width, dont do as traditionally look
 
+
+Check domain name values in GOddady.com 
+
+
 diga2z
 digatoz
 
@@ -111,6 +115,10 @@ toletind.com
 digD2C.com
 D2CA2z.com
 
+jioaisms
+airtelsms.com
+airtelsms.in
+aiwhatsap.com
 
 smsmicro.com
 smsmicrosoft.com
