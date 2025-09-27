@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageCreation Pro - Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --success-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --sidebar-width: 250px;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fb;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+            position: fixed;
+            color: white;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar-menu li {
+            padding: 0;
+        }
+        
+        .sidebar-menu a {
+            padding: 15px 20px;
+            display: block;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+        
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .sidebar-menu i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        
+        .header {
+            background-color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid #eaeaea;
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0 !important;
+            font-weight: 600;
+        }
+        
+        .stats-card {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .stats-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .stats-card h3 {
+            font-size: 1.8rem;
+            margin: 10px 0;
+            color: var(--dark-color);
+        }
+        
+        .stats-card p {
+            color: #6c757d;
+            margin: 0;
+        }
+        
+        .calendar {
+            width: 100%;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .calendar-day {
+            height: 100px;
+            border: 1px solid #eaeaea;
+            padding: 5px;
+            background-color: white;
+            border-radius: 5px;
+            overflow-y: auto;
+        }
+        
+        .calendar-day.header {
+            height: auto;
+            text-align: center;
+            font-weight: bold;
+            background-color: #f8f9fa;
+        }
+        
+        .calendar-day.other-month {
+            background-color: #f8f9fa;
+            color: #adb5bd;
+        }
+        
+        .calendar-event {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-bottom: 2px;
+            cursor: pointer;
+        }
+        
+        .customer-list table {
+            width: 100%;
+        }
+        
+        .customer-list th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-completed {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status-inprogress {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .subscription-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .subscription-1month {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        
+        .subscription-3months {
+            background-color: #cce7ff;
+            color: #0066cc;
+        }
+        
+        .subscription-6months {
+            background-color: #d1f7c4;
+            color: #0f6b0f;
+        }
+        
+        .subscription-1year {
+            background-color: #ffe6cc;
+            color: #cc6600;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .modal-content {
+            border-radius: 10px;
+            border: none;
+        }
+        
+        .modal-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .package-card {
+            border: 1px solid #eaeaea;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            height: 100%;
+        }
+        
+        .package-card.featured {
+            border: 2px solid var(--primary-color);
+            transform: scale(1.05);
+        }
+        
+        .package-card h3 {
+            color: var(--primary-color);
+        }
+        
+        .package-card .price {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        
+        .package-card ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+        
+        .package-card ul li {
+            margin-bottom: 10px;
+        }
+        
+        .package-card ul li i {
+            color: var(--success-color);
+            margin-right: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                text-align: center;
+            }
+            
+            .sidebar .menu-text {
+                display: none;
+            }
+            
+            .sidebar-header h3 {
+                display: none;
+            }
+            
+            .sidebar-menu i {
+                margin-right: 0;
+                font-size: 1.5rem;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-palette"></i> ImageCreation Pro</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active" data-tab="dashboard"><i class="fas fa-tachometer-alt"></i> <span class="menu-text">Dashboard</span></a></li>
+            <li><a href="#" data-tab="calendar"><i class="fas fa-calendar-alt"></i> <span class="menu-text">Calendar</span></a></li>
+            <li><a href="#" data-tab="customers"><i class="fas fa-users"></i> <span class="menu-text">Customers</span></a></li>
+            <li><a href="#" data-tab="subscriptions"><i class="fas fa-credit-card"></i> <span class="menu-text">Subscriptions</span></a></li>
+            <li><a href="#" data-tab="designer"><i class="fas fa-paint-brush"></i> <span class="menu-text">Designer View</span></a></li>
+            <li><a href="#" data-tab="packages"><i class="fas fa-gift"></i> <span class="menu-text">Packages</span></a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h2 id="page-title">Admin Dashboard</h2>
+            <div class="user-info">
+                <span>Welcome, Admin</span>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card stats-card">
+                        <i class="fas fa-users"></i>
+                        <h3>154</h3>
+                        <p>Total Customers</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stats-card">
+                        <i class="fas fa-tasks"></i>
+                        <h3>42</h3>
+                        <p>Pending Requests</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stats-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>89</h3>
+                        <p>Completed Tasks</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stats-card">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <h3>$5,240</h3>
+                        <p>Monthly Revenue</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            Recent Image Requests
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Customer</th>
+                                            <th>Date</th>
+                                            <th>Occasion</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>John Smith</td>
+                                            <td>Oct 15, 2023</td>
+                                            <td>Birthday</td>
+                                            <td><span class="status-badge status-pending">Pending</span></td>
+                                            <td><button class="btn btn-sm btn-primary">View Details</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sarah Johnson</td>
+                                            <td>Oct 18, 2023</td>
+                                            <td>Anniversary</td>
+                                            <td><span class="status-badge status-inprogress">In Progress</span></td>
+                                            <td><button class="btn btn-sm btn-primary">View Details</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Michael Brown</td>
+                                            <td>Oct 20, 2023</td>
+                                            <td>Product Launch</td>
+                                            <td><span class="status-badge status-completed">Completed</span></td>
+                                            <td><button class="btn btn-sm btn-primary">View Details</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Emily Davis</td>
+                                            <td>Oct 22, 2023</td>
+                                            <td>Wedding</td>
+                                            <td><span class="status-badge status-pending">Pending</span></td>
+                                            <td><button class="btn btn-sm btn-primary">View Details</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Upcoming Special Days
+                        </div>
+                        <div class="card-body">
+                            <div class="upcoming-events">
+                                <div class="event-item mb-3 p-2 border rounded">
+                                    <div class="d-flex justify-content-between">
+                                        <strong>John's Birthday</strong>
+                                        <span class="text-muted">Oct 25</span>
+                                    </div>
+                                    <small>John Smith - Premium Package</small>
+                                </div>
+                                <div class="event-item mb-3 p-2 border rounded">
+                                    <div class="d-flex justify-content-between">
+                                        <strong>Company Anniversary</strong>
+                                        <span class="text-muted">Oct 28</span>
+                                    </div>
+                                    <small>ABC Corp - Business Package</small>
+                                </div>
+                                <div class="event-item mb-3 p-2 border rounded">
+                                    <div class="d-flex justify-content-between">
+                                        <strong>Product Launch</strong>
+                                        <span class="text-muted">Nov 2</span>
+                                    </div>
+                                    <small>Tech Innovations - Enterprise Package</small>
+                                </div>
+                                <div class="event-item mb-3 p-2 border rounded">
+                                    <div class="d-flex justify-content-between">
+                                        <strong>Wedding Anniversary</strong>
+                                        <span class="text-muted">Nov 5</span>
+                                    </div>
+                                    <small>Robert Wilson - Premium Package</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar Tab -->
+        <div id="calendar" class="tab-content" style="display: none;">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Customer Calendar</h5>
+                    <div>
+                        <button class="btn btn-sm btn-outline-secondary" id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                        <button class="btn btn-sm btn-outline-secondary mx-2" id="current-month">October 2023</button>
+                        <button class="btn btn-sm btn-outline-secondary" id="next-month"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="calendar">
+                        <div class="calendar-grid">
+                            <div class="calendar-day header">Sun</div>
+                            <div class="calendar-day header">Mon</div>
+                            <div class="calendar-day header">Tue</div>
+                            <div class="calendar-day header">Wed</div>
+                            <div class="calendar-day header">Thu</div>
+                            <div class="calendar-day header">Fri</div>
+                            <div class="calendar-day header">Sat</div>
+                            
+                            <!-- Calendar days will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customers Tab -->
+        <div id="customers" class="tab-content" style="display: none;">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Customer List</h5>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal"><i class="fas fa-plus"></i> Add Customer</button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover customer-list">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Subscription</th>
+                                    <th>Active Requests</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>John Smith</td>
+                                    <td>john.smith@email.com</td>
+                                    <td><span class="subscription-badge subscription-3months">3 Months</span></td>
+                                    <td>3</td>
+                                    <td><span class="status-badge status-pending">Active</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">View</button>
+                                        <button class="btn btn-sm btn-outline-success">Message</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Sarah Johnson</td>
+                                    <td>sarah.j@email.com</td>
+                                    <td><span class="subscription-badge subscription-1year">1 Year</span></td>
+                                    <td>1</td>
+                                    <td><span class="status-badge status-inprogress">Active</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">View</button>
+                                        <button class="btn btn-sm btn-outline-success">Message</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Michael Brown</td>
+                                    <td>m.brown@email.com</td>
+                                    <td><span class="subscription-badge subscription-1month">1 Month</span></td>
+                                    <td>0</td>
+                                    <td><span class="status-badge status-completed">Inactive</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">View</button>
+                                        <button class="btn btn-sm btn-outline-success">Message</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Emily Davis</td>
+                                    <td>emily.davis@email.com</td>
+                                    <td><span class="subscription-badge subscription-6months">6 Months</span></td>
+                                    <td>2</td>
+                                    <td><span class="status-badge status-pending">Active</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">View</button>
+                                        <button class="btn btn-sm btn-outline-success">Message</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subscriptions Tab -->
+        <div id="subscriptions" class="tab-content" style="display: none;">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            Subscription Overview
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Customer</th>
+                                            <th>Plan</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>John Smith</td>
+                                            <td>Premium (3 Months)</td>
+                                            <td>Sep 15, 2023</td>
+                                            <td>Dec 15, 2023</td>
+                                            <td><span class="status-badge status-pending">Active</span></td>
+                                            <td><button class="btn btn-sm btn-outline-primary">Renew</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sarah Johnson</td>
+                                            <td>Enterprise (1 Year)</td>
+                                            <td>Jul 10, 2023</td>
+                                            <td>Jul 10, 2024</td>
+                                            <td><span class="status-badge status-pending">Active</span></td>
+                                            <td><button class="btn btn-sm btn-outline-primary">Renew</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Michael Brown</td>
+                                            <td>Basic (1 Month)</td>
+                                            <td>Oct 1, 2023</td>
+                                            <td>Nov 1, 2023</td>
+                                            <td><span class="status-badge status-completed">Expired</span></td>
+                                            <td><button class="btn btn-sm btn-outline-success">Extend</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Emily Davis</td>
+                                            <td>Premium (6 Months)</td>
+                                            <td>Aug 20, 2023</td>
+                                            <td>Feb 20, 2024</td>
+                                            <td><span class="status-badge status-pending">Active</span></td>
+                                            <td><button class="btn btn-sm btn-outline-primary">Renew</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Subscription Statistics
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <h6>Active Subscriptions</h6>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-success" style="width: 75%">75%</div>
+                                </div>
+                                <small>45 out of 60 customers have active subscriptions</small>
+                            </div>
+                            <div class="mb-4">
+                                <h6>Subscription Types</h6>
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="me-2">1 Month</span>
+                                    <div class="progress flex-grow-1">
+                                        <div class="progress-bar" style="width: 20%">20%</div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="me-2">3 Months</span>
+                                    <div class="progress flex-grow-1">
+                                        <div class="progress-bar bg-info" style="width: 35%">35%</div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="me-2">6 Months</span>
+                                    <div class="progress flex-grow-1">
+                                        <div class="progress-bar bg-warning" style="width: 25%">25%</div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <span class="me-2">1 Year</span>
+                                    <div class="progress flex-grow-1">
+                                        <div class="progress-bar bg-success" style="width: 20%">20%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Designer View Tab -->
+        <div id="designer" class="tab-content" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Designer Dashboard</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6>My Assigned Tasks</h6>
+                                    <h3>12</h3>
+                                    <p>Tasks to complete this week</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6>Completed This Month</h6>
+                                    <h3>28</h3>
+                                    <p>Image creations delivered</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h5>Current Assignments</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Occasion</th>
+                                    <th>Due Date</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>John Smith</td>
+                                    <td>Birthday Card</td>
+                                    <td>Oct 25, 2023</td>
+                                    <td><span class="badge bg-warning">Medium</span></td>
+                                    <td><span class="status-badge status-inprogress">In Progress</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">Details</button>
+                                        <button class="btn btn-sm btn-outline-success">Upload</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Sarah Johnson</td>
+                                    <td>Anniversary Banner</td>
+                                    <td>Oct 28, 2023</td>
+                                    <td><span class="badge bg-danger">High</span></td>
+                                    <td><span class="status-badge status-pending">Not Started</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">Details</button>
+                                        <button class="btn btn-sm btn-outline-success">Start</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Tech Innovations</td>
+                                    <td>Product Launch Graphic</td>
+                                    <td>Nov 2, 2023</td>
+                                    <td><span class="badge bg-info">Low</span></td>
+                                    <td><span class="status-badge status-completed">Completed</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary">Details</button>
+                                        <button class="btn btn-sm btn-outline-warning">Revise</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Packages Tab -->
+        <div id="packages" class="tab-content" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Subscription Packages</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-4">
+                            <div class="package-card">
+                                <h5>Basic</h5>
+                                <div class="price">$19<span class="text-muted">/month</span></div>
+                                <ul>
+                                    <li><i class="fas fa-check"></i> 5 Image Creations per month</li>
+                                    <li><i class="fas fa-check"></i> Standard Templates</li>
+                                    <li><i class="fas fa-check"></i> 2 Revisions per creation</li>
+                                    <li><i class="fas fa-times text-muted"></i> Priority Support</li>
+                                    <li><i class="fas fa-times text-muted"></i> Custom Illustrations</li>
+                                </ul>
+                                <button class="btn btn-outline-primary w-100">Select Plan</button>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="package-card featured">
+                                <span class="badge bg-primary">Most Popular</span>
+                                <h5>Premium</h5>
+                                <div class="price">$49<span class="text-muted">/month</span></div>
+                                <ul>
+                                    <li><i class="fas fa-check"></i> 15 Image Creations per month</li>
+                                    <li><i class="fas fa-check"></i> Premium Templates</li>
+                                    <li><i class="fas fa-check"></i> 5 Revisions per creation</li>
+                                    <li><i class="fas fa-check"></i> Priority Support</li>
+                                    <li><i class="fas fa-times text-muted"></i> Custom Illustrations</li>
+                                </ul>
+                                <button class="btn btn-primary w-100">Select Plan</button>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="package-card">
+                                <h5>Business</h5>
+                                <div class="price">$99<span class="text-muted">/month</span></div>
+                                <ul>
+                                    <li><i class="fas fa-check"></i> 30 Image Creations per month</li>
+                                    <li><i class="fas fa-check"></i> Exclusive Templates</li>
+                                    <li><i class="fas fa-check"></i> Unlimited Revisions</li>
+                                    <li><i class="fas fa-check"></i> 24/7 Priority Support</li>
+                                    <li><i class="fas fa-check"></i> Basic Custom Illustrations</li>
+                                </ul>
+                                <button class="btn btn-outline-primary w-100">Select Plan</button>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="package-card">
+                                <h5>Enterprise</h5>
+                                <div class="price">$199<span class="text-muted">/month</span></div>
+                                <ul>
+                                    <li><i class="fas fa-check"></i> Unlimited Image Creations</li>
+                                    <li><i class="fas fa-check"></i> Custom Template Design</li>
+                                    <li><i class="fas fa-check"></i> Unlimited Revisions</li>
+                                    <li><i class="fas fa-check"></i> Dedicated Account Manager</li>
+                                    <li><i class="fas fa-check"></i> Advanced Custom Illustrations</li>
+                                </ul>
+                                <button class="btn btn-outline-primary w-100">Select Plan</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Customer Modal -->
+    <div class="modal fade" id="addCustomerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="customerName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="customerName" placeholder="Enter customer name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="customerEmail" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="customerEmail" placeholder="Enter email address">
+                        </div>
+                        <div class="mb-3">
+                            <label for="subscriptionPlan" class="form-label">Subscription Plan</label>
+                            <select class="form-select" id="subscriptionPlan">
+                                <option selected>Select a plan</option>
+                                <option value="1">Basic - 1 Month</option>
+                                <option value="2">Premium - 3 Months</option>
+                                <option value="3">Business - 6 Months</option>
+                                <option value="4">Enterprise - 1 Year</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="specialDates" class="form-label">Special Dates (comma separated)</label>
+                            <input type="text" class="form-control" id="specialDates" placeholder="e.g., Birthday: Oct 25, Anniversary: Dec 12">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Add Customer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Request Details Modal -->
+    <div class="modal fade" id="imageRequestModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Image Request Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Customer Information</h6>
+                            <p><strong>Name:</strong> John Smith</p>
+                            <p><strong>Email:</strong> john.smith@email.com</p>
+                            <p><strong>Subscription:</strong> Premium (3 Months)</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Request Details</h6>
+                            <p><strong>Occasion:</strong> Birthday</p>
+                            <p><strong>Date Needed:</strong> October 25, 2023</p>
+                            <p><strong>Status:</strong> <span class="status-badge status-pending">Pending</span></p>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <h6>Description</h6>
+                        <p>I need a birthday card for my daughter's 5th birthday. She loves unicorns and rainbows. The card should be colorful and cheerful. Please include the text "Happy 5th Birthday, Emma!"</p>
+                    </div>
+                    <div class="mt-3">
+                        <h6>Attached References</h6>
+                        <div class="d-flex gap-2">
+                            <div class="border p-2 text-center">
+                                <i class="fas fa-image fa-2x text-muted"></i>
+                                <p class="mb-0">reference1.jpg</p>
+                            </div>
+                            <div class="border p-2 text-center">
+                                <i class="fas fa-file fa-2x text-muted"></i>
+                                <p class="mb-0">notes.txt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Assign to Designer</button>
+                    <button type="button" class="btn btn-success">Start Conversation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all tabs and links
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.style.display = 'none';
+                });
+                document.querySelectorAll('.sidebar-menu a').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Add active class to current tab and link
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).style.display = 'block';
+                this.classList.add('active');
+                
+                // Update page title
+                document.getElementById('page-title').textContent = this.querySelector('.menu-text').textContent + (tabId === 'dashboard' ? '' : ' - Admin Dashboard');
+            });
+        });
+
+        // Calendar functionality
+        function generateCalendar(year, month) {
+            const calendarGrid = document.querySelector('.calendar-grid');
+            // Clear existing calendar days (except headers)
+            while (calendarGrid.children.length > 7) {
+                calendarGrid.removeChild(calendarGrid.lastChild);
+            }
+            
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            
+            document.getElementById('current-month').textContent = `${monthNames[month]} ${year}`;
+            
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+            
+            // Previous month days
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day other-month';
+                dayElement.textContent = daysInPrevMonth - i;
+                calendarGrid.appendChild(dayElement);
+            }
+            
+            // Current month days
+            for (let i = 1; i <= daysInMonth; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.innerHTML = `<div>${i}</div>`;
+                
+                // Add sample events
+                if (i === 15) {
+                    dayElement.innerHTML += `<div class="calendar-event" data-bs-toggle="modal" data-bs-target="#imageRequestModal">John's Birthday</div>`;
+                }
+                if (i === 18) {
+                    dayElement.innerHTML += `<div class="calendar-event" data-bs-toggle="modal" data-bs-target="#imageRequestModal">Sarah's Anniversary</div>`;
+                }
+                if (i === 25) {
+                    dayElement.innerHTML += `<div class="calendar-event" data-bs-toggle="modal" data-bs-target="#imageRequestModal">Product Launch</div>`;
+                }
+                
+                calendarGrid.appendChild(dayElement);
+            }
+            
+            // Next month days
+            const totalCells = 42; // 6 rows x 7 columns
+            const remainingCells = totalCells - (firstDay + daysInMonth);
+            for (let i = 1; i <= remainingCells; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day other-month';
+                dayElement.textContent = i;
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+        
+        // Initialize calendar with current month
+        const currentDate = new Date();
+        generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        
+        // Month navigation
+        document.getElementById('prev-month').addEventListener('click', function() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        });
+        
+        document.getElementById('next-month').addEventListener('click', function() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        });
+        
+        // Simulate data for demonstration
+        document.querySelectorAll('.btn-sm.btn-primary').forEach(button => {
+            button.addEventListener('click', function() {
+                // In a real app, this would fetch specific data based on the request
+                // For demo, we'll just show the modal
+                const modal = new bootstrap.Modal(document.getElementById('imageRequestModal'));
+                modal.show();
+            });
+        });
+    </script>
+</body>
+</html>

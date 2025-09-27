@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageCreation Pro - Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4bb543;
+            --warning-color: #ffcc00;
+            --danger-color: #dc3545;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fb;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-color);
+        }
+        
+        /* Top Navigation */
+        .top-nav {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            height: 50px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+            padding: 0 15px;
+        }
+        
+        .nav-brand {
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            height: 100%;
+        }
+        
+        .nav-tab {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            height: 100%;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            font-size: 0.9rem;
+        }
+        
+        .nav-tab:hover, .nav-tab.active {
+            color: white;
+            background-color: rgba(255,255,255,0.1);
+            border-bottom: 3px solid var(--accent-color);
+        }
+        
+        .nav-tab i {
+            margin-right: 8px;
+            font-size: 1rem;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .page-title {
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid #eaeaea;
+            padding: 15px 20px;
+            font-weight: 600;
+            color: var(--secondary-color);
+            border-radius: 10px 10px 0 0 !important;
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            height: 36px;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-sm {
+            height: 32px;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+        
+        /* Tables */
+        .table th {
+            background-color: #f8f9fa;
+            color: var(--secondary-color);
+            font-weight: 600;
+            border-top: none;
+        }
+        
+        /* Calendar */
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background-color: #eaeaea;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .calendar-header {
+            grid-column: 1 / -1;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .day-header {
+            background-color: #f0f2f5;
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .calendar-day {
+            background-color: white;
+            padding: 10px;
+            min-height: 100px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .calendar-day:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .calendar-day.has-request {
+            background-color: #e8f4ff;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .day-number {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .event-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: inline-block;
+            margin-right: 5px;
+        }
+        
+        .event-item {
+            font-size: 0.75rem;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* Status badges */
+        .badge {
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .badge-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .badge-in-progress {
+            background-color: #cce7ff;
+            color: #004085;
+        }
+        
+        .badge-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        /* Tabs */
+        .view-tabs {
+            display: flex;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 20px;
+        }
+        
+        .view-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .view-tab.active {
+            border-bottom: 3px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(-20px);
+            transition: transform 0.3s;
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eaeaea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6c757d;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        /* Package Cards */
+        .package-card {
+            border: 2px solid #eaeaea;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+            height: 100%;
+        }
+        
+        .package-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .package-card.featured {
+            border-color: var(--primary-color);
+            background: linear-gradient(to bottom, white, #f0f4ff);
+        }
+        
+        .package-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .package-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .package-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 25px;
+        }
+        
+        .package-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-tabs {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .calendar-day {
+                min-height: 70px;
+                padding: 5px;
+            }
+            
+            .event-item {
+                display: none;
+            }
+        }
+        
+        /* View specific styles */
+        #adminView, #customerView, #designerView {
+            display: none;
+        }
+        
+        #adminView.active, #customerView.active, #designerView.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-palette"></i> ImageCreation Pro
+            </div>
+            
+            <div class="nav-tabs">
+                <a href="#" class="nav-tab active" data-view="adminView">
+                    <i class="fas fa-user-shield"></i> Admin
+                </a>
+                <a href="#" class="nav-tab" data-view="customerView">
+                    <i class="fas fa-users"></i> Customer
+                </a>
+                <a href="#" class="nav-tab" data-view="designerView">
+                    <i class="fas fa-paint-brush"></i> Designer
+                </a>
+            </div>
+            
+            <div class="user-menu">
+                <span>Admin User</span>
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Admin View -->
+        <div id="adminView" class="active">
+            <div class="page-title">
+                <h2>Admin Dashboard</h2>
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add New Customer
+                </button>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="far fa-calendar-alt"></i> Customer Requests Calendar
+                        </div>
+                        <div class="card-body">
+                            <div class="calendar">
+                                <div class="calendar-header">September 2023</div>
+                                <div class="day-header">Sun</div>
+                                <div class="day-header">Mon</div>
+                                <div class="day-header">Tue</div>
+                                <div class="day-header">Wed</div>
+                                <div class="day-header">Thu</div>
+                                <div class="day-header">Fri</div>
+                                <div class="day-header">Sat</div>
+                                
+                                <!-- Calendar days will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-tasks"></i> Recent Image Requests
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Customer</th>
+                                            <th>Date</th>
+                                            <th>Description</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>John Smith</td>
+                                            <td>Sep 15, 2023</td>
+                                            <td>Birthday image for my daughter</td>
+                                            <td><span class="badge badge-completed">Completed</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary">View</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sarah Johnson</td>
+                                            <td>Sep 18, 2023</td>
+                                            <td>Anniversary card design</td>
+                                            <td><span class="badge badge-in-progress">In Progress</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary">View</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mike Williams</td>
+                                            <td>Sep 20, 2023</td>
+                                            <td>Business promotion image</td>
+                                            <td><span class="badge badge-pending">Pending</span></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary">View</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-chart-pie"></i> Subscription Overview
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-3">
+                                <span>1 Month</span>
+                                <span>15 customers</span>
+                            </div>
+                            <div class="progress mb-3" style="height: 10px;">
+                                <div class="progress-bar" style="width: 30%; background-color: #4361ee;"></div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mb-3">
+                                <span>3 Months</span>
+                                <span>22 customers</span>
+                            </div>
+                            <div class="progress mb-3" style="height: 10px;">
+                                <div class="progress-bar" style="width: 44%; background-color: #3a0ca3;"></div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mb-3">
+                                <span>6 Months</span>
+                                <span>8 customers</span>
+                            </div>
+                            <div class="progress mb-3" style="height: 10px;">
+                                <div class="progress-bar" style="width: 16%; background-color: #4cc9f0;"></div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mb-3">
+                                <span>1 Year</span>
+                                <span>5 customers</span>
+                            </div>
+                            <div class="progress mb-3" style="height: 10px;">
+                                <div class="progress-bar" style="width: 10%; background-color: #7209b7;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-user-clock"></i> Pending Conversations
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3 p-2 border rounded">
+                                <div class="flex-shrink-0">
+                                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                        JS
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <div class="fw-bold">John Smith</div>
+                                    <div class="text-muted small">Sep 15 - Birthday image</div>
+                                </div>
+                                <button class="btn btn-sm btn-primary">Reply</button>
+                            </div>
+                            
+                            <div class="d-flex align-items-center mb-3 p-2 border rounded">
+                                <div class="flex-shrink-0">
+                                    <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                        SJ
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <div class="fw-bold">Sarah Johnson</div>
+                                    <div class="text-muted small">Sep 18 - Anniversary card</div>
+                                </div>
+                                <button class="btn btn-sm btn-primary">Reply</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Customer View -->
+        <div id="customerView">
+            <div class="page-title">
+                <h2>Customer Portal</h2>
+                <button class="btn btn-primary" id="addRequestBtn">
+                    <i class="fas fa-plus"></i> Add New Request
+                </button>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="far fa-calendar-alt"></i> My Special Days
+                        </div>
+                        <div class="card-body">
+                            <div class="calendar">
+                                <div class="calendar-header">September 2023</div>
+                                <div class="day-header">Sun</div>
+                                <div class="day-header">Mon</div>
+                                <div class="day-header">Tue</div>
+                                <div class="day-header">Wed</div>
+                                <div class="day-header">Thu</div>
+                                <div class="day-header">Fri</div>
+                                <div class="day-header">Sat</div>
+                                
+                                <!-- Calendar days will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-user-tag"></i> My Subscription
+                        </div>
+                        <div class="card-body text-center">
+                            <h4 class="text-primary">Premium Plan</h4>
+                            <p>6 Months Subscription</p>
+                            <div class="bg-light p-3 rounded mb-3">
+                                <div class="fw-bold">Expires: Dec 15, 2023</div>
+                                <div class="text-muted">90 days remaining</div>
+                            </div>
+                            <button class="btn btn-primary w-100">Upgrade Plan</button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-history"></i> Recent Requests
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3 p-2 border rounded">
+                                <div class="flex-grow-1">
+                                    <div class="fw-bold">Birthday Image</div>
+                                    <div class="text-muted small">Sep 15, 2023</div>
+                                </div>
+                                <span class="badge badge-completed">Completed</span>
+                            </div>
+                            
+                            <div class="d-flex align-items-center mb-3 p-2 border rounded">
+                                <div class="flex-grow-1">
+                                    <div class="fw-bold">Anniversary Card</div>
+                                    <div class="text-muted small">Sep 18, 2023</div>
+                                </div>
+                                <span class="badge badge-in-progress">In Progress</span>
+                            </div>
+                            
+                            <div class="d-flex align-items-center p-2 border rounded">
+                                <div class="flex-grow-1">
+                                    <div class="fw-bold">Business Promotion</div>
+                                    <div class="text-muted small">Sep 20, 2023</div>
+                                </div>
+                                <span class="badge badge-pending">Pending</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Designer View -->
+        <div id="designerView">
+            <div class="page-title">
+                <h2>Designer Workspace</h2>
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus"></i> New Design Task
+                </button>
+            </div>
+            
+            <div class="view-tabs">
+                <div class="view-tab active">Assigned Tasks</div>
+                <div class="view-tab">Completed Tasks</div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-tasks"></i> My Assignments</span>
+                            <span class="badge bg-primary">3 Tasks</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3 p-3 border rounded">
+                                <div class="flex-shrink-0">
+                                    <div class="rounded-circle bg-warning text-dark d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                        <i class="fas fa-exclamation"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <div class="fw-bold">Sarah Johnson</div>
+                                    <div class="text-muted">Anniversary Card - Due: Sep 18</div>
+                                    <div class="mt-1">
+                                        <span class="badge badge-in-progress">In Progress</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-primary">Work On</button>
+                            </div>
+                            
+                            <div class="d-flex align-items-center mb-3 p-3 border rounded">
+                                <div class="flex-shrink-0">
+                                    <div class="rounded-circle bg-info text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                        <i class="fas fa-paint-brush"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <div class="fw-bold">Mike Williams</div>
+                                    <div class="text-muted">Business Promotion - Due: Sep 20</div>
+                                    <div class="mt-1">
+                                        <span class="badge badge-pending">Pending</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-primary">Start</button>
+                            </div>
+                            
+                            <div class="d-flex align-items-center p-3 border rounded">
+                                <div class="flex-shrink-0">
+                                    <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <div class="fw-bold">John Smith</div>
+                                    <div class="text-muted">Birthday Image - Due: Sep 15</div>
+                                    <div class="mt-1">
+                                        <span class="badge badge-completed">Completed</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-primary">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-calendar-week"></i> This Week's Schedule
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3 p-2 border-bottom">
+                                <div class="fw-bold text-primary me-3">Mon</div>
+                                <div>Sep 18</div>
+                                <div class="ms-auto">
+                                    <span class="badge bg-primary">1 Task</span>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex align-items-center mb-3 p-2 border-bottom">
+                                <div class="fw-bold text-primary me-3">Tue</div>
+                                <div>Sep 19</div>
+                                <div class="ms-auto">
+                                    <span class="badge bg-light text-dark">No tasks</span>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex align-items-center mb-3 p-2 border-bottom">
+                                <div class="fw-bold text-primary me-3">Wed</div>
+                                <div>Sep 20</div>
+                                <div class="ms-auto">
+                                    <span class="badge bg-warning text-dark">1 Task</span>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex align-items-center mb-3 p-2 border-bottom">
+                                <div class="fw-bold text-primary me-3">Thu</div>
+                                <div>Sep 21</div>
+                                <div class="ms-auto">
+                                    <span class="badge bg-light text-dark">No tasks</span>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex align-items-center p-2">
+                                <div class="fw-bold text-primary me-3">Fri</div>
+                                <div>Sep 22</div>
+                                <div class="ms-auto">
+                                    <span class="badge bg-info">2 Tasks</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-chart-line"></i> Performance Metrics
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Tasks Completed</span>
+                                <span>24/30</span>
+                            </div>
+                            <div class="progress mb-3" style="height: 10px;">
+                                <div class="progress-bar bg-success" style="width: 80%;"></div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>On Time Delivery</span>
+                                <span>92%</span>
+                            </div>
+                            <div class="progress mb-3" style="height: 10px;">
+                                <div class="progress-bar bg-primary" style="width: 92%;"></div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Customer Satisfaction</span>
+                                <span>4.8/5</span>
+                            </div>
+                            <div class="progress mb-3" style="height: 10px;">
+                                <div class="progress-bar bg-warning" style="width: 96%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="requestModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Image Request</h5>
+                <button type="button" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="occasionDate" class="form-label">Occasion Date</label>
+                        <input type="date" class="form-control" id="occasionDate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="occasionType" class="form-label">Occasion Type</label>
+                        <select class="form-select" id="occasionType">
+                            <option selected>Select occasion type</option>
+                            <option>Birthday</option>
+                            <option>Anniversary</option>
+                            <option>Wedding</option>
+                            <option>Business Event</option>
+                            <option>Holiday</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" rows="3" placeholder="Describe the image you want..."></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="referenceImage" class="form-label">Reference Image (Optional)</label>
+                        <input type="file" class="form-control" id="referenceImage">
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="needConversation">
+                        <label class="form-check-label" for="needConversation">
+                            I need to discuss this request with a designer
+                        </label>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Submit Request</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation between views
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all tabs
+                document.querySelectorAll('.nav-tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all views
+                document.querySelectorAll('#adminView, #customerView, #designerView').forEach(view => {
+                    view.classList.remove('active');
+                });
+                
+                // Show selected view
+                const viewId = this.getAttribute('data-view');
+                document.getElementById(viewId).classList.add('active');
+            });
+        });
+        
+        // Modal functionality
+        const requestModal = document.getElementById('requestModal');
+        const addRequestBtn = document.getElementById('addRequestBtn');
+        const modalClose = document.querySelector('.modal-close');
+        
+        if (addRequestBtn) {
+            addRequestBtn.addEventListener('click', function() {
+                requestModal.classList.add('active');
+            });
+        }
+        
+        modalClose.addEventListener('click', function() {
+            requestModal.classList.remove('active');
+        });
+        
+        // Close modal when clicking outside
+        requestModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+            }
+        });
+        
+        // Calendar generation
+        function generateCalendar() {
+            const calendars = document.querySelectorAll('.calendar');
+            
+            calendars.forEach(calendar => {
+                // Clear existing days (except headers)
+                const existingDays = calendar.querySelectorAll('.calendar-day');
+                existingDays.forEach(day => day.remove());
+                
+                // September 2023 starts on Friday (0=Sun, 1=Mon, ..., 6=Sat)
+                const firstDay = 5; // Friday
+                const daysInMonth = 30;
+                
+                // Add empty days for the beginning of the month
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.className = 'calendar-day';
+                    calendar.appendChild(emptyDay);
+                }
+                
+                // Add days of the month
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const day = document.createElement('div');
+                    day.className = 'calendar-day';
+                    
+                    const dayNumber = document.createElement('div');
+                    dayNumber.className = 'day-number';
+                    dayNumber.textContent = i;
+                    day.appendChild(dayNumber);
+                    
+                    // Add some sample events
+                    if (i === 5 || i === 12 || i === 19 || i === 26) {
+                        const event = document.createElement('div');
+                        event.className = 'event-item';
+                        event.innerHTML = '<span class="event-indicator"></span> Meeting';
+                        day.appendChild(event);
+                    }
+                    
+                    if (i === 8 || i === 15 || i === 22 || i === 29) {
+                        const event = document.createElement('div');
+                        event.className = 'event-item';
+                        event.innerHTML = '<span class="event-indicator"></span> Deadline';
+                        day.appendChild(event);
+                        day.classList.add('has-request');
+                    }
+                    
+                    if (i === 3 || i === 10 || i === 17 || i === 24) {
+                        const event = document.createElement('div');
+                        event.className = 'event-item';
+                        event.innerHTML = '<span class="event-indicator"></span> Review';
+                        day.appendChild(event);
+                    }
+                    
+                    calendar.appendChild(day);
+                }
+            });
+        }
+        
+        // Initialize the calendar when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            generateCalendar();
+        });
+    </script>
+</body>
+</html>
