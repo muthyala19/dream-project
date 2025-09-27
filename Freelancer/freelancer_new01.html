@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillBridge - Connect Talent with Opportunity</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --ultra-thin: 20px;
+            --button-width: 70px;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.4;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        /* Ultra-thin navigation */
+        .navbar {
+            min-height: var(--ultra-thin);
+            padding: 2px 0;
+            border-bottom: 1px solid #e0e0e0;
+            background-color: white;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 16px;
+            padding: 0;
+            margin: 0;
+            line-height: var(--ultra-thin);
+        }
+        
+        .nav-link {
+            padding: 0 8px;
+            font-size: 12px;
+            line-height: var(--ultra-thin);
+            height: var(--ultra-thin);
+        }
+        
+        /* Thin buttons */
+        .btn-thin {
+            height: var(--ultra-thin);
+            width: var(--button-width);
+            font-size: 11px;
+            padding: 0;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Thin form controls */
+        .form-control-thin {
+            height: var(--ultra-thin);
+            font-size: 12px;
+            padding: 0 8px;
+        }
+        
+        /* Section styling - non-natural layout */
+        .section {
+            padding: 40px 0;
+            position: relative;
+        }
+        
+        .section-alt {
+            background-color: white;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        /* Card styling */
+        .card-thin {
+            border: none;
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .card-thin:hover {
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+        
+        .card-header-thin {
+            padding: 8px 12px;
+            background-color: white;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .card-body-thin {
+            padding: 12px;
+        }
+        
+        /* Icon styling */
+        .icon-thin {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--light-color);
+            margin-right: 10px;
+        }
+        
+        /* Registration forms */
+        .reg-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            font-size: 12px;
+        }
+        
+        /* Animation for form transitions */
+        .form-panel {
+            display: none;
+        }
+        
+        .form-panel.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Ultra-thin Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">SkillBridge</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    style="height: var(--ultra-thin); width: var(--ultra-thin); padding: 0;">
+                <span class="navbar-toggler-icon" style="font-size: 12px;"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#for-companies">For Companies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#for-talents">For Talents</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-thin btn-primary ms-2" id="registerBtn">Register</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="display-6 fw-bold mb-3">Bridge the Gap Between Talent and Companies</h1>
+                    <p class="mb-4">Connect skilled professionals with companies seeking affordable, high-quality services.</p>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-thin btn-primary" id="companyRegBtn">Company Sign Up</button>
+                        <button class="btn btn-thin btn-outline-primary" id="talentRegBtn">Talent Sign Up</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                         class="img-fluid rounded" alt="Professional Collaboration">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section section-alt" id="services">
+        <div class="container">
+            <h2 class="section-title text-center">Our Free Services</h2>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <div class="card card-thin">
+                        <div class="card-header-thin d-flex align-items-center">
+                            <div class="icon-thin">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            Logo Design
+                        </div>
+                        <div class="card-body-thin">
+                            <p class="small mb-0">Professional logo creation to establish your brand identity.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-thin">
+                        <div class="card-header-thin d-flex align-items-center">
+                            <div class="icon-thin">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            Website Design
+                        </div>
+                        <div class="card-body-thin">
+                            <p class="small mb-0">Custom website design tailored to your business needs.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-thin">
+                        <div class="card-header-thin d-flex align-items-center">
+                            <div class="icon-thin">
+                                <i class="fas fa-pencil-alt"></i>
+                            </div>
+                            Post Design
+                        </div>
+                        <div class="card-body-thin">
+                            <p class="small mb-0">Engaging social media posts to boost your online presence.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-thin">
+                        <div class="card-header-thin d-flex align-items-center">
+                            <div class="icon-thin">
+                                <i class="fas fa-newspaper"></i>
+                            </div>
+                            Poster Design
+                        </div>
+                        <div class="card-body-thin">
+                            <p class="small mb-0">Eye-catching posters for events and promotions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Section -->
+    <section class="section" id="registration">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="reg-form">
+                        <h3 class="section-title text-center">Join SkillBridge</h3>
+                        
+                        <!-- Registration Type Selector -->
+                        <div class="d-flex justify-content-center mb-4">
+                            <div class="btn-group" role="group">
+                                <input type="radio" class="btn-check" name="regType" id="companyType" autocomplete="off" checked>
+                                <label class="btn btn-thin btn-outline-primary" for="companyType">Company</label>
+                                
+                                <input type="radio" class="btn-check" name="regType" id="talentType" autocomplete="off">
+                                <label class="btn btn-thin btn-outline-primary" for="talentType">Talent</label>
+                            </div>
+                        </div>
+                        
+                        <!-- Company Registration Form -->
+                        <div class="form-panel active" id="companyForm">
+                            <form id="companyRegistration">
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control form-control-thin" placeholder="Company Name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="email" class="form-control form-control-thin" placeholder="Email Address" required>
+                                    </div>
+                                </div>
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control form-control-thin" placeholder="Industry" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control form-control-thin" placeholder="Phone Number" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control form-control-thin" rows="2" placeholder="Company Description" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control form-control-thin" placeholder="Services Needed (comma separated)" required>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-thin btn-primary">Register Company</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Talent Registration Form -->
+                        <div class="form-panel" id="talentForm">
+                            <form id="talentRegistration">
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control form-control-thin" placeholder="Full Name" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="email" class="form-control form-control-thin" placeholder="Email Address" required>
+                                    </div>
+                                </div>
+                                <div class="row g-2 mb-3">
+                                    <div class="col-md-6">
+                                        <select class="form-control form-control-thin" required>
+                                            <option value="">Select Primary Skill</option>
+                                            <option value="design">Graphic Design</option>
+                                            <option value="web">Web Development</option>
+                                            <option value="writing">Content Writing</option>
+                                            <option value="marketing">Digital Marketing</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control form-control-thin" placeholder="Phone Number" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <textarea class="form-control form-control-thin" rows="2" placeholder="Professional Summary" required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control form-control-thin" placeholder="Portfolio Link (optional)">
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-thin btn-primary">Register as Talent</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- For Companies Section -->
+    <section class="section section-alt" id="for-companies">
+        <div class="container">
+            <h2 class="section-title">For Companies</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Find Skilled Professionals on a Budget</h4>
+                    <p>Our platform connects you with talented individuals who can help complete your service needs without breaking the bank.</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Access a diverse pool of skilled professionals</li>
+                        <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Post projects and receive proposals quickly</li>
+                        <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Budget-friendly solutions for startups and SMEs</li>
+                        <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Quality assurance through our rating system</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                         class="img-fluid rounded" alt="Business Meeting">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- For Talents Section -->
+    <section class="section" id="for-talents">
+        <div class="container">
+            <h2 class="section-title">For Skilled Professionals</h2>
+            <div class="row">
+                <div class="col-md-6 order-md-2">
+                    <h4>Showcase Your Skills and Find Opportunities</h4>
+                    <p>Join our platform to connect with companies seeking your expertise and grow your professional network.</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Showcase your portfolio to potential clients</li>
+                        <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Find projects that match your skills and interests</li>
+                        <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Build your professional reputation with reviews</li>
+                        <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Flexible working arrangements</li>
+                    </ul>
+                </div>
+                <div class="col-md-6 order-md-1">
+                    <img src="https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                         class="img-fluid rounded" alt="Creative Professional">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>SkillBridge</h5>
+                    <p>Connecting talent with opportunity through affordable, high-quality services.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#services" class="text-light">Services</a></li>
+                        <li><a href="#for-companies" class="text-light">For Companies</a></li>
+                        <li><a href="#for-talents" class="text-light">For Talents</a></li>
+                        <li><a href="#registration" class="text-light">Register</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope me-2"></i> info@skillbridge.com</li>
+                        <li><i class="fas fa-phone me-2"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Business Ave, City</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-3">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 SkillBridge. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        $(document).ready(function() {
+            // Registration type toggle
+            $('input[name="regType"]').change(function() {
+                if ($('#companyType').is(':checked')) {
+                    $('#companyForm').addClass('active');
+                    $('#talentForm').removeClass('active');
+                } else {
+                    $('#talentForm').addClass('active');
+                    $('#companyForm').removeClass('active');
+                }
+            });
+            
+            // Scroll to registration section
+            $('#registerBtn, #companyRegBtn, #talentRegBtn').click(function() {
+                $('html, body').animate({
+                    scrollTop: $('#registration').offset().top - 70
+                }, 800);
+                
+                // Set registration type based on which button was clicked
+                if ($(this).is('#talentRegBtn')) {
+                    $('#talentType').prop('checked', true).trigger('change');
+                } else {
+                    $('#companyType').prop('checked', true).trigger('change');
+                }
+            });
+            
+            // Form submissions
+            $('#companyRegistration').submit(function(e) {
+                e.preventDefault();
+                alert('Company registration submitted! We will contact you soon.');
+                $(this).trigger('reset');
+            });
+            
+            $('#talentRegistration').submit(function(e) {
+                e.preventDefault();
+                alert('Talent registration submitted! We will review your profile and contact you soon.');
+                $(this).trigger('reset');
+            });
+        });
+    </script>
+</body>
+</html>

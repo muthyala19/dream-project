@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillConnect | Connect Clients with Skilled Professionals</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #1a1a2e;
+            --secondary-dark: #16213e;
+            --accent-color: #0fce7c;
+            --light-bg: #f8f9fa;
+            --text-light: #e6e6e6;
+            --text-dark: #333;
+            --thin-border: 1px;
+            --element-height: 40px;
+            --button-height: 18px;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.4;
+        }
+        
+        .thin-section {
+            height: 40px;
+            margin-bottom: 10px;
+            border-bottom: var(--thin-border) solid #e0e0e0;
+        }
+        
+        .thin-button {
+            height: var(--button-height);
+            line-height: var(--button-height);
+            padding: 0 12px;
+            font-size: 12px;
+            border-radius: 2px;
+        }
+        
+        .navbar-custom {
+            background-color: var(--primary-dark);
+            height: 45px;
+        }
+        
+        .navbar-brand {
+            color: var(--accent-color);
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .nav-link {
+            color: var(--text-light);
+            font-size: 13px;
+            padding: 8px 12px;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+            color: white;
+            padding: 40px 0;
+            margin-bottom: 20px;
+        }
+        
+        .stats-card {
+            background-color: white;
+            border-radius: 4px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            height: 100%;
+            border-left: 3px solid var(--accent-color);
+        }
+        
+        .profile-card {
+            background-color: white;
+            border-radius: 4px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+            transition: transform 0.2s;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .profile-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .requirement-card {
+            background-color: white;
+            border-radius: 4px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+            border-top: 3px solid var(--accent-color);
+        }
+        
+        .skill-tag {
+            display: inline-block;
+            background-color: #e9ecef;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin: 2px;
+        }
+        
+        .rating-stars {
+            color: #ffc107;
+            font-size: 12px;
+        }
+        
+        .search-box {
+            background-color: white;
+            border-radius: 4px;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .form-control-thin {
+            height: 35px;
+            font-size: 14px;
+            border-radius: 2px;
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+        }
+        
+        .btn-accent:hover {
+            background-color: #0dbd70;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+            border-bottom: var(--thin-border) solid #e0e0e0;
+            padding-bottom: 8px;
+        }
+        
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: 30px 0;
+            margin-top: 40px;
+        }
+        
+        .service-icon {
+            font-size: 24px;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        .tab-content {
+            padding: 15px 0;
+        }
+        
+        .nav-tabs .nav-link {
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: var(--text-dark);
+            font-size: 14px;
+            padding: 8px 15px;
+        }
+        
+        .nav-tabs .nav-link.active {
+            border-bottom: 2px solid var(--accent-color);
+            color: var(--accent-color);
+            background: transparent;
+        }
+        
+        .client-count, .skilled-count {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        
+        .count-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#">SkillConnect</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-briefcase me-1"></i> For Clients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i classfas fa-user-tie me-1"></i> For Professionals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-sign-in-alt me-1"></i> Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-user-plus me-1"></i> Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="display-6 fw-bold">Connect with Skilled Professionals</h1>
+                    <p class="lead">Find the right talent for your projects or offer your skills to clients worldwide.</p>
+                    <div class="mt-4">
+                        <button class="btn btn-accent me-2 thin-button">Find Professionals</button>
+                        <button class="btn btn-outline-light thin-button">Post a Project</button>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="https://cdn.pixabay.com/photo/2020/05/18/16/17/social-media-5187243_1280.png" alt="Connection Illustration" class="img-fluid" style="max-height: 250px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="container my-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stats-card text-center">
+                    <div class="client-count">2,547</div>
+                    <div class="count-label">Active Clients</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card text-center">
+                    <div class="skilled-count">8,932</div>
+                    <div class="count-label">Skilled Professionals</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card text-center">
+                    <div class="client-count">1,204</div>
+                    <div class="count-label">Projects Completed</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card text-center">
+                    <div class="skilled-count">4.8</div>
+                    <div class="count-label">Average Rating</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="container my-4">
+        <div class="search-box">
+            <div class="row">
+                <div class="col-md-8">
+                    <input type="text" class="form-control form-control-thin" placeholder="Search for skills, services, or professionals...">
+                </div>
+                <div class="col-md-2">
+                    <select class="form-select form-control-thin">
+                        <option>All Categories</option>
+                        <option>Logo Design</option>
+                        <option>Web Design</option>
+                        <option>Poster Design</option>
+                        <option>Social Media</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-accent w-100 thin-button">Search</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="container my-4">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab">Featured Professionals</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab">Client Requirements</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab">Service Categories</button>
+            </li>
+        </ul>
+        
+        <div class="tab-content" id="myTabContent">
+            <!-- Featured Professionals Tab -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Professional" class="profile-img me-3">
+                                <div>
+                                    <h6 class="mb-0">Michael Chen</h6>
+                                    <small class="text-muted">Graphic Designer</small>
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span class="ms-1">4.5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="small">Specialized in logo design and branding with 5+ years of experience.</p>
+                            <div class="mb-2">
+                                <span class="skill-tag">Logo Design</span>
+                                <span class="skill-tag">Branding</span>
+                                <span class="skill-tag">Illustration</span>
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary thin-button w-100">View Profile</button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="profile-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Professional" class="profile-img me-3">
+                                <div>
+                                    <h6 class="mb-0">Sarah Johnson</h6>
+                                    <small class="text-muted">Web Developer</small>
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span class="ms-1">5.0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="small">Full-stack developer specializing in responsive web design and e-commerce solutions.</p>
+                            <div class="mb-2">
+                                <span class="skill-tag">HTML/CSS</span>
+                                <span class="skill-tag">JavaScript</span>
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">Node.js</span>
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary thin-button w-100">View Profile</button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="profile-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Professional" class="profile-img me-3">
+                                <div>
+                                    <h6 class="mb-0">David Wilson</h6>
+                                    <small class="text-muted">Social Media Manager</small>
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span class="ms-1">4.0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="small">Expert in social media strategy and content creation for businesses of all sizes.</p>
+                            <div class="mb-2">
+                                <span class="skill-tag">Social Media</span>
+                                <span class="skill-tag">Content Creation</span>
+                                <span class="skill-tag">Marketing</span>
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary thin-button w-100">View Profile</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Client Requirements Tab -->
+            <div class="tab-pane fade" id="profile" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="requirement-card">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0">Logo Design for Tech Startup</h6>
+                                <span class="badge bg-success">Budget: $200-$500</span>
+                            </div>
+                            <p class="small mb-2">Looking for a modern, minimalist logo for our new SaaS company. Should represent innovation and simplicity.</p>
+                            <div class="mb-2">
+                                <span class="skill-tag">Logo Design</span>
+                                <span class="skill-tag">Branding</span>
+                                <span class="skill-tag">Minimalist</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">Posted 2 days ago</small>
+                                <button class="btn btn-sm btn-accent thin-button">Apply Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="requirement-card">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0">Website Redesign for Restaurant</h6>
+                                <span class="badge bg-warning">Budget: $500-$1000</span>
+                            </div>
+                            <p class="small mb-2">Need to update our restaurant website to be more mobile-friendly and include online ordering functionality.</p>
+                            <div class="mb-2">
+                                <span class="skill-tag">Web Design</span>
+                                <span class="skill-tag">Responsive</span>
+                                <span class="skill-tag">E-commerce</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">Posted 5 hours ago</small>
+                                <button class="btn btn-sm btn-accent thin-button">Apply Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="requirement-card">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0">Social Media Posts for Fashion Brand</h6>
+                                <span class="badge bg-info">Budget: $150-$300</span>
+                            </div>
+                            <p class="small mb-2">Need creative social media posts for our new fashion collection launch. Instagram and Facebook focus.</p>
+                            <div class="mb-2">
+                                <span class="skill-tag">Social Media</span>
+                                <span class="skill-tag">Graphic Design</span>
+                                <span class="skill-tag">Fashion</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">Posted 1 day ago</small>
+                                <button class="btn btn-sm btn-accent thin-button">Apply Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="requirement-card">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0">Poster Design for Music Event</h6>
+                                <span class="badge bg-primary">Budget: $100-$250</span>
+                            </div>
+                            <p class="small mb-2">Eye-catching poster design for an upcoming music festival. Should capture energetic and youthful vibe.</p>
+                            <div class="mb-2">
+                                <span class="skill-tag">Poster Design</span>
+                                <span class="skill-tag">Event</span>
+                                <span class="skill-tag">Music</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">Posted 3 days ago</small>
+                                <button class="btn btn-sm btn-accent thin-button">Apply Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service Categories Tab -->
+            <div class="tab-pane fade" id="contact" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-3 text-center mb-4">
+                        <div class="service-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h6>Logo Design</h6>
+                        <p class="small">Creative and unique logo designs for your brand</p>
+                    </div>
+                    <div class="col-md-3 text-center mb-4">
+                        <div class="service-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h6>Website Design</h6>
+                        <p class="small">Responsive and modern website designs</p>
+                    </div>
+                    <div class="col-md-3 text-center mb-4">
+                        <div class="service-icon">
+                            <i class="fas fa-file-image"></i>
+                        </div>
+                        <h6>Poster Design</h6>
+                        <p class="small">Eye-catching posters for events and promotions</p>
+                    </div>
+                    <div class="col-md-3 text-center mb-4">
+                        <div class="service-icon">
+                            <i class="fas fa-hashtag"></i>
+                        </div>
+                        <h6>Social Media</h6>
+                        <p class="small">Engaging social media content and management</p>
+                    </div>
+                    <div class="col-md-3 text-center mb-4">
+                        <div class="service-icon">
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <h6>Content Writing</h6>
+                        <p class="small">Quality content for websites and marketing</p>
+                    </div>
+                    <div class="col-md-3 text-center mb-4">
+                        <div class="service-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h6>Video Editing</h6>
+                        <p class="small">Professional video editing services</p>
+                    </div>
+                    <div class="col-md-3 text-center mb-4">
+                        <div class="service-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h6>Digital Marketing</h6>
+                        <p class="small">Strategic marketing to grow your business</p>
+                    </div>
+                    <div class="col-md-3 text-center mb-4">
+                        <div class="service-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h6>App Development</h6>
+                        <p class="small">Custom mobile application development</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration CTA -->
+    <section class="container my-5">
+        <div class="row align-items-center" style="background-color: var(--secondary-dark); color: white; padding: 30px; border-radius: 4px;">
+            <div class="col-md-8">
+                <h4>Ready to get started?</h4>
+                <p class="mb-0">Join thousands of clients and professionals who are already using SkillConnect to achieve their goals.</p>
+            </div>
+            <div class="col-md-4 text-end">
+                <button class="btn btn-accent me-2 thin-button">Register as Client</button>
+                <button class="btn btn-outline-light thin-button">Register as Professional</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>SkillConnect</h5>
+                    <p>Connecting clients with skilled professionals for affordable and quality services.</p>
+                </div>
+                <div class="col-md-2">
+                    <h6>For Clients</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">How it Works</a></li>
+                        <li><a href="#" class="text-light">Post a Project</a></li>
+                        <li><a href="#" class="text-light">Browse Professionals</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h6>For Professionals</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">Create Profile</a></li>
+                        <li><a href="#" class="text-light">Find Work</a></li>
+                        <li><a href="#" class="text-light">Resources</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h6>Company</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">About Us</a></li>
+                        <li><a href="#" class="text-light">Careers</a></li>
+                        <li><a href="#" class="text-light">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h6>Follow Us</h6>
+                    <div class="d-flex">
+                        <a href="#" class="text-light me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-light me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light me-2"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: #444;">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2023 SkillConnect. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="#" class="text-light me-3">Privacy Policy</a>
+                    <a href="#" class="text-light">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    
+    <script>
+        // Simple script to handle tab switching and any interactive elements
+        $(document).ready(function() {
+            // Tab functionality is handled by Bootstrap
+            // Additional interactive features can be added here
+            
+            // Example: Smooth scrolling for anchor links
+            $('a[href^="#"]').on('click', function(event) {
+                var target = $(this.getAttribute('href'));
+                if(target.length) {
+                    event.preventDefault();
+                    $('html, body').stop().animate({
+                        scrollTop: target.offset().top - 70
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

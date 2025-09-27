@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillConnect - Connect Talent with Opportunity</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #1a1a2e;
+            --primary-light: #16213e;
+            --accent: #0f3460;
+            --highlight: #e94560;
+            --text-light: #f0f0f0;
+            --text-muted: #a0a0a0;
+            --border-thin: 0.5px;
+            --element-height: 45px;
+            --button-height: 18px;
+            --section-padding: 30px 0;
+        }
+        
+        body {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 300;
+            line-height: 1.4;
+        }
+        
+        /* Thin UI elements */
+        .thin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .thin-section {
+            padding: var(--section-padding);
+            border-bottom: var(--border-thin) solid rgba(255,255,255,0.1);
+        }
+        
+        .thin-button {
+            height: var(--button-height);
+            line-height: var(--button-height);
+            padding: 0 12px;
+            font-size: 11px;
+            border-radius: 2px;
+            border: var(--border-thin) solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: var(--text-light);
+            transition: all 0.2s;
+        }
+        
+        .thin-button:hover {
+            background: var(--highlight);
+            border-color: var(--highlight);
+        }
+        
+        .thin-input {
+            height: var(--element-height);
+            background: rgba(255,255,255,0.05);
+            border: var(--border-thin) solid rgba(255,255,255,0.1);
+            border-radius: 2px;
+            color: var(--text-light);
+            font-size: 13px;
+            padding: 0 12px;
+        }
+        
+        .thin-card {
+            background: var(--primary-light);
+            border: var(--border-thin) solid rgba(255,255,255,0.1);
+            border-radius: 3px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        
+        .thin-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .profile-img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: var(--border-thin) solid rgba(255,255,255,0.2);
+        }
+        
+        .stats-number {
+            font-size: 24px;
+            font-weight: 300;
+            color: var(--highlight);
+        }
+        
+        .stats-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .skill-tag {
+            display: inline-block;
+            background: rgba(233, 69, 96, 0.2);
+            border: var(--border-thin) solid var(--highlight);
+            border-radius: 2px;
+            padding: 2px 8px;
+            font-size: 10px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .rating {
+            color: #ffc107;
+            font-size: 12px;
+        }
+        
+        .nav-tabs.thin-tabs {
+            border-bottom: var(--border-thin) solid rgba(255,255,255,0.1);
+        }
+        
+        .nav-tabs.thin-tabs .nav-link {
+            background: transparent;
+            border: none;
+            border-bottom: var(--border-thin) solid transparent;
+            color: var(--text-muted);
+            font-size: 12px;
+            padding: 8px 15px;
+            height: var(--element-height);
+        }
+        
+        .nav-tabs.thin-tabs .nav-link.active {
+            color: var(--text-light);
+            border-bottom-color: var(--highlight);
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 300;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        
+        h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--highlight);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="thin-section" style="padding: 10px 0;">
+        <div class="thin-container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <h1 class="mb-0" style="font-size: 20px;">SkillConnect</h1>
+                    <span class="ms-3" style="font-size: 11px; color: var(--text-muted);">Talent meets opportunity</span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="input-group me-3" style="width: 250px;">
+                        <input type="text" class="form-control thin-input" placeholder="Search skills, clients, projects...">
+                        <button class="btn thin-button" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                    <button class="btn thin-button me-2"><i class="fas fa-user me-1"></i> Login</button>
+                    <button class="btn thin-button" style="background: var(--highlight); border-color: var(--highlight);">Register</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="thin-section" style="padding: 15px 0;">
+        <div class="thin-container">
+            <div class="row text-center">
+                <div class="col">
+                    <div class="stats-number">1,247</div>
+                    <div class="stats-label">Skilled People</div>
+                </div>
+                <div class="col">
+                    <div class="stats-number">892</div>
+                    <div class="stats-label">Active Clients</div>
+                </div>
+                <div class="col">
+                    <div class="stats-number">2,134</div>
+                    <div class="stats-label">Projects Completed</div>
+                </div>
+                <div class="col">
+                    <div class="stats-number">4.8</div>
+                    <div class="stats-label">Average Rating</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="thin-section">
+        <div class="thin-container">
+            <ul class="nav nav-tabs thin-tabs mb-4">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#clients">Client Requirements</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#profiles">Skilled Profiles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#services">Free Services</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <!-- Client Requirements Tab -->
+                <div class="tab-pane fade show active" id="clients">
+                    <div class="section-title">Recent Client Requirements</div>
+                    
+                    <div class="row">
+                        <!-- Client Requirement Card 1 -->
+                        <div class="col-md-6">
+                            <div class="thin-card">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" class="profile-img me-2">
+                                        <div>
+                                            <h4 class="mb-0" style="font-size: 14px;">TechStart Inc.</h4>
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                                <span style="color: var(--text-muted); font-size: 10px; margin-left: 5px;">4.5</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="badge" style="background: var(--highlight); font-size: 9px; padding: 3px 6px;">Budget: $200-500</span>
+                                </div>
+                                
+                                <h3 style="font-size: 16px;">Logo Design for Startup</h3>
+                                <p style="font-size: 12px; color: var(--text-muted);">We need a modern, minimalist logo for our new tech startup. Should represent innovation and connectivity.</p>
+                                
+                                <div class="mb-3">
+                                    <span class="skill-tag">Logo Design</span>
+                                    <span class="skill-tag">Minimalist</span>
+                                    <span class="skill-tag">Brand Identity</span>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small style="color: var(--text-muted); font-size: 10px;">Posted 2 days ago</small>
+                                    <button class="btn thin-button">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Client Requirement Card 2 -->
+                        <div class="col-md-6">
+                            <div class="thin-card">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" class="profile-img me-2">
+                                        <div>
+                                            <h4 class="mb-0" style="font-size: 14px;">Local Cafe</h4>
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="far fa-star"></i>
+                                                <span style="color: var(--text-muted); font-size: 10px; margin-left: 5px;">4.0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="badge" style="background: var(--highlight); font-size: 9px; padding: 3px 6px;">Budget: $100-300</span>
+                                </div>
+                                
+                                <h3 style="font-size: 16px;">Social Media Post Designs</h3>
+                                <p style="font-size: 12px; color: var(--text-muted);">Need eye-catching social media posts for our cafe's daily specials and promotions.</p>
+                                
+                                <div class="mb-3">
+                                    <span class="skill-tag">Social Media</span>
+                                    <span class="skill-tag">Graphic Design</span>
+                                    <span class="skill-tag">Marketing</span>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small style="color: var(--text-muted); font-size: 10px;">Posted 1 day ago</small>
+                                    <button class="btn thin-button">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button class="btn thin-button">View All Requirements</button>
+                    </div>
+                </div>
+                
+                <!-- Skilled Profiles Tab -->
+                <div class="tab-pane fade" id="profiles">
+                    <div class="section-title">Featured Skilled Professionals</div>
+                    
+                    <div class="row">
+                        <!-- Skilled Profile Card 1 -->
+                        <div class="col-md-4">
+                            <div class="thin-card text-center">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" class="profile-img mb-3" style="width: 60px; height: 60px;">
+                                <h3 style="font-size: 16px;">Alex Johnson</h3>
+                                <p style="font-size: 12px; color: var(--text-muted);">Graphic Designer</p>
+                                
+                                <div class="rating mb-3">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span style="color: var(--text-muted); font-size: 10px; margin-left: 5px;">5.0</span>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <span class="skill-tag">Logo Design</span>
+                                    <span class="skill-tag">Branding</span>
+                                    <span class="skill-tag">Illustration</span>
+                                </div>
+                                
+                                <p style="font-size: 11px; color: var(--text-muted);">Completed 47 projects with 100% client satisfaction.</p>
+                                
+                                <button class="btn thin-button">View Profile</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Skilled Profile Card 2 -->
+                        <div class="col-md-4">
+                            <div class="thin-card text-center">
+                                <img src="https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" class="profile-img mb-3" style="width: 60px; height: 60px;">
+                                <h3 style="font-size: 16px;">Sarah Miller</h3>
+                                <p style="font-size: 12px; color: var(--text-muted);">Web Developer</p>
+                                
+                                <div class="rating mb-3">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    <span style="color: var(--text-muted); font-size: 10px; margin-left: 5px;">4.7</span>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <span class="skill-tag">HTML/CSS</span>
+                                    <span class="skill-tag">JavaScript</span>
+                                    <span class="skill-tag">React</span>
+                                </div>
+                                
+                                <p style="font-size: 11px; color: var(--text-muted);">Specialized in creating responsive websites for small businesses.</p>
+                                
+                                <button class="btn thin-button">View Profile</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Skilled Profile Card 3 -->
+                        <div class="col-md-4">
+                            <div class="thin-card text-center">
+                                <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" class="profile-img mb-3" style="width: 60px; height: 60px;">
+                                <h3 style="font-size: 16px;">Maria Rodriguez</h3>
+                                <p style="font-size: 12px; color: var(--text-muted);">Content Writer</p>
+                                
+                                <div class="rating mb-3">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span style="color: var(--text-muted); font-size: 10px; margin-left: 5px;">4.2</span>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <span class="skill-tag">Copywriting</span>
+                                    <span class="skill-tag">SEO</span>
+                                    <span class="skill-tag">Blog Posts</span>
+                                </div>
+                                
+                                <p style="font-size: 11px; color: var(--text-muted);">Crafting engaging content that converts visitors into customers.</p>
+                                
+                                <button class="btn thin-button">View Profile</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button class="btn thin-button">Browse All Professionals</button>
+                    </div>
+                </div>
+                
+                <!-- Free Services Tab -->
+                <div class="tab-pane fade" id="services">
+                    <div class="section-title">Our Free Services for Startups</div>
+                    
+                    <div class="row">
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="thin-card h-100">
+                                <i class="fas fa-palette mb-3" style="font-size: 24px; color: var(--highlight);"></i>
+                                <h3 style="font-size: 14px;">Logo Design</h3>
+                                <p style="font-size: 11px; color: var(--text-muted);">Professional logo creation for your brand identity</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="thin-card h-100">
+                                <i class="fas fa-laptop-code mb-3" style="font-size: 24px; color: var(--highlight);"></i>
+                                <h3 style="font-size: 14px;">Website Design</h3>
+                                <p style="font-size: 11px; color: var(--text-muted);">Basic website setup and design for small businesses</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="thin-card h-100">
+                                <i class="fas fa-pen-nib mb-3" style="font-size: 24px; color: var(--highlight);"></i>
+                                <h3 style="font-size: 14px;">Post Design</h3>
+                                <p style="font-size: 11px; color: var(--text-muted);">Social media and marketing post designs</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="thin-card h-100">
+                                <i class="fas fa-file-image mb-3" style="font-size: 24px; color: var(--highlight);"></i>
+                                <h3 style="font-size: 14px;">Poster Design</h3>
+                                <p style="font-size: 11px; color: var(--text-muted);">Eye-catching posters for events and promotions</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="thin-card mt-4">
+                        <h3 style="font-size: 16px;">How to Access Free Services</h3>
+                        <p style="font-size: 12px; color: var(--text-muted);">
+                            Register your startup on our platform, complete your profile, and submit a request for any of our free services. 
+                            Our skilled professionals will review your request and connect with you to bring your vision to life.
+                        </p>
+                        <button class="btn thin-button mt-2">Register Your Startup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Section -->
+    <div class="thin-section">
+        <div class="thin-container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="thin-card">
+                        <h2 style="font-size: 18px;">For Clients</h2>
+                        <p style="font-size: 12px; color: var(--text-muted);">
+                            Register your company, post your service needs, and connect with skilled professionals who can help within your budget.
+                        </p>
+                        <ul style="font-size: 11px; color: var(--text-muted); padding-left: 15px;">
+                            <li>Post your service requirements</li>
+                            <li>Set your budget constraints</li>
+                            <li>Review skilled professional profiles</li>
+                            <li>Get quality work delivered on time</li>
+                        </ul>
+                        <button class="btn thin-button mt-3">Register as Client</button>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="thin-card">
+                        <h2 style="font-size: 18px;">For Skilled People</h2>
+                        <p style="font-size: 12px; color: var(--text-muted);">
+                            Create your profile, showcase your skills, and find clients who need your expertise for their projects.
+                        </p>
+                        <ul style="font-size: 11px; color: var(--text-muted); padding-left: 15px;">
+                            <li>Showcase your portfolio and skills</li>
+                            <li>Find projects that match your expertise</li>
+                            <li>Work with clients directly</li>
+                            <li>Build your reputation with reviews</li>
+                        </ul>
+                        <button class="btn thin-button mt-3">Register as Professional</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="thin-section" style="padding: 20px 0; border-bottom: none;">
+        <div class="thin-container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 style="font-size: 16px;">SkillConnect</h3>
+                    <p style="font-size: 11px; color: var(--text-muted);">
+                        Connecting talented professionals with clients who need quality services on a budget.
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <h4 style="font-size: 12px; margin-bottom: 10px;">Quick Links</h4>
+                    <ul class="list-unstyled" style="font-size: 11px;">
+                        <li><a href="#" style="color: var(--text-muted); text-decoration: none;">Home</a></li>
+                        <li><a href="#" style="color: var(--text-muted); text-decoration: none;">How It Works</a></li>
+                        <li><a href="#" style="color: var(--text-muted); text-decoration: none;">Free Services</a></li>
+                        <li><a href="#" style="color: var(--text-muted); text-decoration: none;">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h4 style="font-size: 12px; margin-bottom: 10px;">Connect</h4>
+                    <div>
+                        <a href="#" class="me-2" style="color: var(--text-muted);"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="me-2" style="color: var(--text-muted);"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="me-2" style="color: var(--text-muted);"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" style="color: var(--text-muted);"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4" style="font-size: 10px; color: var(--text-muted);">
+                &copy; 2023 SkillConnect. All rights reserved.
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    
+    <script>
+        // Simple script to handle tab switching and any interactive elements
+        $(document).ready(function() {
+            // Add active class to clicked nav items
+            $('.nav-tabs .nav-link').on('click', function() {
+                $('.nav-tabs .nav-link').removeClass('active');
+                $(this).addClass('active');
+            });
+            
+            // Example of dynamic content loading (would be replaced with actual API calls)
+            $('.thin-button').on('click', function() {
+                // In a real application, this would load more content or navigate to a new page
+                console.log('Button clicked: ', $(this).text());
+            });
+        });
+    </script>
+</body>
+</html>
