@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdTech Companies Directory</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fb;
+            color: var(--dark-color);
+            padding-top: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .company-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            border: none;
+            height: 100%;
+        }
+        
+        .company-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .company-logo {
+            height: 60px;
+            width: 60px;
+            object-fit: contain;
+            border-radius: 8px;
+            background-color: #f0f2f5;
+            padding: 5px;
+        }
+        
+        .company-name {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .company-description {
+            color: #6c757d;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .badge-custom {
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: 500;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .filters-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 12px;
+            color: #6c757d;
+        }
+        
+        .search-input {
+            padding-left: 40px;
+        }
+        
+        .loading-spinner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+        }
+        
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: #6c757d;
+        }
+        
+        .employee-trend-up {
+            color: #28a745;
+        }
+        
+        .employee-trend-down {
+            color: #dc3545;
+        }
+        
+        .traffic-stats {
+            font-size: 0.85rem;
+        }
+        
+        .card-footer {
+            background-color: transparent;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .pagination-container {
+            margin-top: 2rem;
+        }
+        
+        .page-link {
+            color: var(--primary-color);
+        }
+        
+        .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .company-details {
+            font-size: 0.85rem;
+        }
+        
+        .company-website {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .company-website:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header text-center">
+            <h1 class="display-4 fw-bold">EdTech Companies Directory</h1>
+            <p class="lead">Discover innovative education technology companies and their impact</p>
+        </div>
+        
+        <div class="filters-section">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="search-box mb-3">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="searchInput" class="form-control search-input" placeholder="Search companies...">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <select id="sectorFilter" class="form-select">
+                        <option value="">All Sectors</option>
+                        <option value="Edtech">Edtech</option>
+                        <option value="Digital Learning Platform">Digital Learning Platform</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select id="statusFilter" class="form-select">
+                        <option value="">All Statuses</option>
+                        <option value="Active">Active</option>
+                        <option value="Acquired">Acquired</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span id="resultsCount">Loading companies...</span>
+                        <div>
+                            <label for="sortSelect" class="form-label me-2">Sort by:</label>
+                            <select id="sortSelect" class="form-select form-select-sm d-inline-block w-auto">
+                                <option value="name">Name</option>
+                                <option value="employees">Employee Count</option>
+                                <option value="founded">Founded Date</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="loading-spinner" id="loadingSpinner">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3">Loading companies data...</p>
+        </div>
+        
+        <div class="no-results" id="noResults">
+            <i class="fas fa-search fa-3x mb-3"></i>
+            <h4>No companies found</h4>
+            <p>Try adjusting your search or filter criteria</p>
+        </div>
+        
+        <div class="row" id="companiesList">
+            <!-- Companies will be loaded here -->
+        </div>
+        
+        <div class="pagination-container d-flex justify-content-center" id="paginationContainer">
+            <!-- Pagination will be generated here -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Configuration
+        const COMPANIES_PER_PAGE = 12;
+        let allCompanies = [];
+        let currentPage = 1;
+        let filteredCompanies = [];
+
+        // DOM Elements
+        const companiesList = document.getElementById('companiesList');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const noResults = document.getElementById('noResults');
+        const paginationContainer = document.getElementById('paginationContainer');
+        const searchInput = document.getElementById('searchInput');
+        const sectorFilter = document.getElementById('sectorFilter');
+        const statusFilter = document.getElementById('statusFilter');
+        const sortSelect = document.getElementById('sortSelect');
+        const resultsCount = document.getElementById('resultsCount');
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load data from JSON file
+            loadCompaniesData();
+            
+            // Add event listeners for filters
+            searchInput.addEventListener('input', filterAndRenderCompanies);
+            sectorFilter.addEventListener('change', filterAndRenderCompanies);
+            statusFilter.addEventListener('change', filterAndRenderCompanies);
+            sortSelect.addEventListener('change', filterAndRenderCompanies);
+        });
+
+        // Load companies data from JSON file
+        function loadCompaniesData() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'data.json', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        try {
+                            allCompanies = JSON.parse(xhr.responseText);
+                            // If data is a single object, wrap it in an array
+                            if (!Array.isArray(allCompanies)) {
+                                allCompanies = [allCompanies];
+                            }
+                            loadingSpinner.style.display = 'none';
+                            filterAndRenderCompanies();
+                        } catch (e) {
+                            console.error('Error parsing JSON:', e);
+                            loadingSpinner.innerHTML = `
+                                <div class="alert alert-danger">
+                                    <h4>Error Loading Data</h4>
+                                    <p>There was an error loading the companies data. Please check the console for details.</p>
+                                </div>
+                            `;
+                        }
+                    } else {
+                        console.error('Error loading data:', xhr.statusText);
+                        loadingSpinner.innerHTML = `
+                            <div class="alert alert-danger">
+                                <h4>Error Loading Data</h4>
+                                <p>Failed to load companies data. Please make sure the data.json file exists.</p>
+                                <p>Status: ${xhr.status} - ${xhr.statusText}</p>
+                            </div>
+                        `;
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        // Filter companies based on search and filter criteria
+        function filterCompanies() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const sectorValue = sectorFilter.value;
+            const statusValue = statusFilter.value;
+            const sortValue = sortSelect.value;
+            
+            let filtered = allCompanies.filter(company => {
+                const matchesSearch = company.name.toLowerCase().includes(searchTerm) || 
+                                     (company.description && company.description.toLowerCase().includes(searchTerm));
+                const matchesSector = !sectorValue || 
+                                    (company.sector === sectorValue) || 
+                                    (company.sectors && company.sectors.some(s => s.sector_name === sectorValue));
+                const matchesStatus = !statusValue || company.company_status === statusValue;
+                
+                return matchesSearch && matchesSector && matchesStatus;
+            });
+            
+            // Sort the filtered results
+            filtered.sort((a, b) => {
+                switch(sortValue) {
+                    case 'employees':
+                        return (b.employee_trendline?.employee_count || 0) - (a.employee_trendline?.employee_count || 0);
+                    case 'founded':
+                        return (b.founded_date || 0) - (a.founded_date || 0);
+                    case 'name':
+                    default:
+                        return a.name.localeCompare(b.name);
+                }
+            });
+            
+            return filtered;
+        }
+
+        // Render companies based on current filters and page
+        function filterAndRenderCompanies() {
+            filteredCompanies = filterCompanies();
+            currentPage = 1;
+            renderCompanies();
+            renderPagination();
+            updateResultsCount();
+        }
+
+        // Update the results count display
+        function updateResultsCount() {
+            if (filteredCompanies.length === 1) {
+                resultsCount.textContent = `Showing 1 company`;
+            } else {
+                resultsCount.textContent = `Showing ${filteredCompanies.length} companies`;
+            }
+        }
+
+        // Render companies for the current page
+        function renderCompanies() {
+            companiesList.innerHTML = '';
+            
+            if (filteredCompanies.length === 0) {
+                noResults.style.display = 'block';
+                paginationContainer.innerHTML = '';
+                return;
+            }
+            
+            noResults.style.display = 'none';
+            
+            const startIndex = (currentPage - 1) * COMPANIES_PER_PAGE;
+            const endIndex = Math.min(startIndex + COMPANIES_PER_PAGE, filteredCompanies.length);
+            const companiesToShow = filteredCompanies.slice(startIndex, endIndex);
+            
+            companiesToShow.forEach(company => {
+                const companyCard = createCompanyCard(company);
+                companiesList.appendChild(companyCard);
+            });
+        }
+
+        // Create a company card element
+        function createCompanyCard(company) {
+            const col = document.createElement('div');
+            col.className = 'col-md-6 col-lg-4';
+            
+            const card = document.createElement('div');
+            card.className = 'company-card card';
+            
+            const cardBody = document.createElement('div');
+            cardBody.className = 'card-body';
+            
+            // Company header with logo and name
+            const headerDiv = document.createElement('div');
+            headerDiv.className = 'd-flex align-items-start mb-3';
+            
+            const logoImg = document.createElement('img');
+            logoImg.className = 'company-logo me-3';
+            logoImg.src = company.logo || 'https://via.placeholder.com/60x60?text=Logo';
+            logoImg.alt = `${company.name} logo`;
+            logoImg.onerror = function() {
+                this.src = 'https://via.placeholder.com/60x60?text=Logo';
+            };
+            
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'flex-grow-1';
+            
+            const nameHeading = document.createElement('h5');
+            nameHeading.className = 'company-name';
+            nameHeading.textContent = company.name;
+            
+            const sectorBadge = document.createElement('span');
+            sectorBadge.className = 'badge badge-custom';
+            sectorBadge.textContent = company.sector || 'Edtech';
+            
+            nameDiv.appendChild(nameHeading);
+            nameDiv.appendChild(sectorBadge);
+            
+            headerDiv.appendChild(logoImg);
+            headerDiv.appendChild(nameDiv);
+            
+            // Company description
+            const description = document.createElement('p');
+            description.className = 'company-description';
+            description.textContent = company.description || 'No description available.';
+            
+            // Company details
+            const detailsDiv = document.createElement('div');
+            detailsDiv.className = 'company-details mt-3';
+            
+            // Location and founded year
+            const locationText = document.createElement('div');
+            locationText.className = 'mb-1';
+            locationText.innerHTML = `<i class="fas fa-map-marker-alt me-1"></i> ${company.city}, ${company.country} ${company.founded_date ? `• Founded ${company.founded_date}` : ''}`;
+            
+            // Employee count with trend
+            const employeeText = document.createElement('div');
+            employeeText.className = 'mb-1';
+            const employeeCount = company.employee_trendline?.employee_count || company.team_size || 'N/A';
+            let trendIcon = '';
+            let trendClass = '';
+            
+            if (company.employee_trendline) {
+                const oneMonthChange = company.employee_trendline.one_month_change;
+                if (oneMonthChange > 0) {
+                    trendIcon = '<i class="fas fa-arrow-up"></i>';
+                    trendClass = 'employee-trend-up';
+                } else if (oneMonthChange < 0) {
+                    trendIcon = '<i class="fas fa-arrow-down"></i>';
+                    trendClass = 'employee-trend-down';
+                }
+            }
+            
+            employeeText.innerHTML = `<i class="fas fa-users me-1"></i> ${employeeCount} employees <span class="${trendClass}">${trendIcon}</span>`;
+            
+            // Website link
+            let websiteLink = '';
+            if (company.website) {
+                const websiteUrl = company.website.startsWith('http') ? company.website : `https://${company.website}`;
+                websiteLink = `<div class="mb-1"><i class="fas fa-globe me-1"></i> <a href="${websiteUrl}" target="_blank" class="company-website">${company.website}</a></div>`;
+            }
+            
+            detailsDiv.appendChild(locationText);
+            detailsDiv.appendChild(employeeText);
+            if (websiteLink) {
+                detailsDiv.innerHTML += websiteLink;
+            }
+            
+            // Stats container
+            const statsDiv = document.createElement('div');
+            statsDiv.className = 'stats-container mt-3';
+            
+            // Funding rounds
+            const fundingItem = document.createElement('div');
+            fundingItem.className = 'stat-item';
+            fundingItem.innerHTML = `
+                <div class="stat-value">${company.funding_round_count || 0}</div>
+                <div class="stat-label">Funding Rounds</div>
+            `;
+            
+            // Monthly traffic
+            const trafficItem = document.createElement('div');
+            trafficItem.className = 'stat-item';
+            const monthlyVisits = company.monthly_traffic?.monthly_visits || 'N/A';
+            trafficItem.innerHTML = `
+                <div class="stat-value">${monthlyVisits}</div>
+                <div class="stat-label">Monthly Visits</div>
+            `;
+            
+            // Company status
+            const statusItem = document.createElement('div');
+            statusItem.className = 'stat-item';
+            statusItem.innerHTML = `
+                <div class="stat-value">${company.company_status || 'Unknown'}</div>
+                <div class="stat-label">Status</div>
+            `;
+            
+            statsDiv.appendChild(fundingItem);
+            statsDiv.appendChild(trafficItem);
+            statsDiv.appendChild(statusItem);
+            
+            // Assemble the card
+            cardBody.appendChild(headerDiv);
+            cardBody.appendChild(description);
+            cardBody.appendChild(detailsDiv);
+            cardBody.appendChild(statsDiv);
+            
+            card.appendChild(cardBody);
+            col.appendChild(card);
+            
+            return col;
+        }
+
+        // Render pagination controls
+        function renderPagination() {
+            paginationContainer.innerHTML = '';
+            
+            if (filteredCompanies.length <= COMPANIES_PER_PAGE) {
+                return;
+            }
+            
+            const totalPages = Math.ceil(filteredCompanies.length / COMPANIES_PER_PAGE);
+            const pagination = document.createElement('ul');
+            pagination.className = 'pagination';
+            
+            // Previous button
+            const prevLi = document.createElement('li');
+            prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+            const prevLink = document.createElement('a');
+            prevLink.className = 'page-link';
+            prevLink.href = '#';
+            prevLink.innerHTML = '&laquo;';
+            prevLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderCompanies();
+                    renderPagination();
+                }
+            });
+            prevLi.appendChild(prevLink);
+            pagination.appendChild(prevLi);
+            
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                const pageLi = document.createElement('li');
+                pageLi.className = `page-item ${i === currentPage ? 'active' : ''}`;
+                const pageLink = document.createElement('a');
+                pageLink.className = 'page-link';
+                pageLink.href = '#';
+                pageLink.textContent = i;
+                pageLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    currentPage = i;
+                    renderCompanies();
+                    renderPagination();
+                });
+                pageLi.appendChild(pageLink);
+                pagination.appendChild(pageLi);
+            }
+            
+            // Next button
+            const nextLi = document.createElement('li');
+            nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+            const nextLink = document.createElement('a');
+            nextLink.className = 'page-link';
+            nextLink.href = '#';
+            nextLink.innerHTML = '&raquo;';
+            nextLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderCompanies();
+                    renderPagination();
+                }
+            });
+            nextLi.appendChild(nextLink);
+            pagination.appendChild(nextLi);
+            
+            paginationContainer.appendChild(pagination);
+        }
+    </script>
+</body>
+</html>
