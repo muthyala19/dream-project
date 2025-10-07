@@ -348,13 +348,18 @@
                     const applicantsCount = job.totalApplicants || 0;
                     
                     html += `
-                        <div class="job-card">
+                        <div class="job-card" style="position: relative;">
                             <div class="job-header">
                                 <h3 class="job-title">${job.title}</h3>
                                 <p class="company-name">${job.company.name}</p>
+                                ${job.company.logo ? `<img src="${job.company.logo}" style="height:50px;position: absolute;right: 30px;top: 30px;"/>` : ''}
                             </div>
                             <div class="job-body">
                                 <div class="job-details">
+                                    <div class="detail-item">
+                                        <div class="detail-label">Date Posted</div>
+                                        <div class="detail-value">${(new Date(job.postedAt)).toLocaleDateString()}</div>
+                                    </div>
                                     <div class="detail-item">
                                         <div class="detail-label">Experience</div>
                                         <div class="detail-value">${expRange}</div>
