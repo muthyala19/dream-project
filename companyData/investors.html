@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investor Records</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .investor-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: box-shadow 0.3s ease;
+        }
+        .investor-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .investor-name {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .investment-amount {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .loader {
+            text-align: center;
+            padding: 2rem;
+        }
+        .error-message {
+            color: #e74c3c;
+            text-align: center;
+            padding: 2rem;
+        }
+        .description {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Show only 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  max-width: 400px; /* Optional: control width */
+  transition: all 0.3s ease;
+}
+
+.description:hover {
+  -webkit-line-clamp: unset; /* Show full text on hover */
+  background: #f9f9f9;
+  padding: 4px;
+  border-radius: 4px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 10;
+}
+    </style>
+</head>
+<body>
+    <div class="container my-4">
+        <h1 class="text-center mb-4">Investor Records</h1>
+        <div id="investors-container" class="row" ></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('investors-container');
+            
+            // Show loading state
+            container.innerHTML = `
+                <div class="loader">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Loading investor data...</p>
+                </div>
+            `;
+
+            // Fetch data from data.json
+            fetch('data1.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Clear loading state
+                    container.innerHTML = '';
+                    
+                    // Check if data is an array
+                    const investors = Array.isArray(data) ? data : [data];
+                    
+                    if (investors.length === 0) {
+                        container.innerHTML = '<div class="error-message">No investor data found</div>';
+                        return;
+                    }
+                    
+                    // Build investor cards
+                    investors.forEach(investor => {
+                        const card = document.createElement('div');
+                        card.className = 'investor-card col-md-3';
+                        
+                        card.innerHTML = `
+                   
+                           
+                                <div class="col-md-8">
+                                    <h3 class="investor-name">${investor.name}</h3>
+                                    <img src="${investor.logo}" style="height:70px"/>
+                                    <p class="mb-1"><strong>Type:</strong> ${investor.investor_type}</p>
+                                    <p class="mb-1"><strong>Location:</strong> ${investor.city}, ${investor.state}, ${investor.country}</p>
+                                    <p class="mb-1"><strong>Investments:</strong> ${investor.investment_count}</p>
+                                    ${investor.description ? `<p class="description  mb-1" title="${investor.description}"><strong>Description:</strong> ${investor.description}</p>` : ''}
+                                </div>
+                                <div class="col-md-4 text-md-end">
+                                    ${investor.total_investment_amount > 0 ? 
+                                        `<div class="investment-amount">$${investor.total_investment_amount.toLocaleString()}</div>` : 
+                                        '<div class="text-muted">Amount not disclosed</div>'
+                                    }
+                                    ${investor.linkedin ? 
+                                        `<a href="${investor.linkedin}" target="_blank" class="btn btn-outline-primary btn-sm mt-2">LinkedIn</a>` : 
+                                        ''
+                                    }
+                                </div>
+                              
+                        `;
+                        
+                        container.appendChild(card);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading data:', error);
+                    container.innerHTML = `
+                        <div class="error-message">
+                            <h4>Error loading data</h4>
+                            <p>${error.message}</p>
+                            <p>Please check if data.json exists and is accessible.</p>
+                        </div>
+                    `;
+                });
+        });
+    </script>
+</body>
+</html>
