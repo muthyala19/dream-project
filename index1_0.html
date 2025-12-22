@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToLet.live | Live Property Trading & Chat</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --primary-dark: #554fd8;
+            --secondary: #FF6584;
+            --accent: #36D1DC;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --dark: #1A1D29;
+            --light: #F8F9FA;
+            --gray: #8A8D9B;
+            --light-gray: #EFF0F6;
+            --card-bg: #FFFFFF;
+            --app-bg: #F5F6FA;
+            --border-radius: 16px;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--app-bg);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 260px;
+            background-color: var(--card-bg);
+            border-right: 1px solid var(--light-gray);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .logo-container {
+            padding: 25px 20px;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+        
+        .logo-icon i {
+            color: white;
+            font-size: 1.4rem;
+        }
+        
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-links {
+            padding: 25px 15px;
+            flex-grow: 1;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(108, 99, 255, 0.08);
+            color: var(--primary);
+        }
+        
+        .nav-item i {
+            width: 24px;
+            margin-right: 14px;
+            font-size: 1.2rem;
+        }
+        
+        .nav-badge {
+            background-color: var(--secondary);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-left: auto;
+        }
+        
+        .user-profile {
+            padding: 20px;
+            border-top: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+        
+        .user-info h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        
+        .user-info p {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .search-container {
+            flex-grow: 1;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 16px 20px 16px 50px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .notification-btn, .live-auction-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--card-bg);
+            border: 1px solid var(--light-gray);
+            color: var(--dark);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .notification-btn:hover, .live-auction-btn:hover {
+            background-color: var(--light-gray);
+            transform: translateY(-2px);
+        }
+        
+        .notification-dot {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+        }
+        
+        .live-auction-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            width: auto;
+            padding: 0 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            gap: 8px;
+        }
+        
+        /* Property Grid */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+        
+        .view-all {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .property-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .property-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .property-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--secondary);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .property-badge.live {
+            background-color: var(--success);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+        }
+        
+        .property-image {
+            height: 200px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .property-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .property-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .property-price-type {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .property-live-chat {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        
+        .property-live-chat:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+        
+        .property-info {
+            padding: 20px;
+        }
+        
+        .property-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .property-location {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .property-features {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .feature i {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .feature span {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .property-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .property-agent {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .agent-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .agent-info h5 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        
+        .agent-info p {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .property-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--light-gray);
+            color: var(--dark);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .action-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Live Auctions Section */
+        .live-auctions {
+            margin-bottom: 40px;
+        }
+        
+        .auction-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .auction-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .auction-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        
+        .auction-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .auction-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .auction-timer {
+            background-color: rgba(255, 101, 132, 0.1);
+            color: var(--secondary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .auction-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .auction-bids {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .auction-bid-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: auto;
+        }
+        
+        .auction-bid-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(108, 99, 255, 0.2);
+        }
+        
+        /* Chat Sidebar */
+        .chat-sidebar {
+            width: 380px;
+            background-color: var(--card-bg);
+            border-left: 1px solid var(--light-gray);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        .chat-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .chat-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background: none;
+            border: none;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .chat-tab.active {
+            color: var(--primary);
+        }
+        
+        .chat-tab.active:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .chat-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .chat-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 10px;
+        }
+        
+        .chat-item:hover, .chat-item.active {
+            background-color: rgba(108, 99, 255, 0.08);
+        }
+        
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            margin-right: 15px;
+            position: relative;
+        }
+        
+        .chat-avatar.online:after {
+            content: '';
+            position: absolute;
+            bottom: 3px;
+            right: 3px;
+            width: 12px;
+            height: 12px;
+            background-color: var(--success);
+            border-radius: 50%;
+            border: 2px solid var(--card-bg);
+        }
+        
+        .chat-info {
+            flex-grow: 1;
+        }
+        
+        .chat-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .chat-preview {
+            font-size: 0.9rem;
+            color: var(--gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
+        }
+        
+        .chat-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .chat-time {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+        
+        .chat-unread {
+            background-color: var(--secondary);
+            color: white;
+            font-size: 0.7rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .chat-sidebar {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 80px;
+            }
+            
+            .logo-text, .nav-item span, .user-info, .nav-badge {
+                display: none;
+            }
+            
+            .nav-item {
+                justify-content: center;
+                padding: 15px;
+            }
+            
+            .nav-item i {
+                margin-right: 0;
+            }
+            
+            .logo-container {
+                justify-content: center;
+                padding: 25px 10px;
+            }
+            
+            .user-profile {
+                justify-content: center;
+                padding: 20px 10px;
+            }
+            
+            .user-avatar {
+                margin-right: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .auction-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .top-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+            }
+            
+            .search-container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="logo-container">
+                <a href="#" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="logo-text">ToLet.live</div>
+                </a>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-search"></i>
+                    <span>Find Properties</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-fire"></i>
+                    <span>Live Auctions</span>
+                    <span class="nav-badge">3</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-comments"></i>
+                    <span>Messages</span>
+                    <span class="nav-badge">5</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Agents</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Market Trends</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-gavel"></i>
+                    <span>Trading Floor</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-star"></i>
+                    <span>Saved Properties</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+            
+            <div class="user-profile">
+                <div class="user-avatar">JD</div>
+                <div class="user-info">
+                    <h4>John Doe</h4>
+                    <p>Premium Member</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Header -->
+            <div class="top-header">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-box" placeholder="Search properties, agents, auctions...">
+                </div>
+                
+                <div class="header-actions">
+                    <div class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <div class="notification-dot"></div>
+                    </div>
+                    <button class="live-auction-btn">
+                        <i class="fas fa-bolt"></i>
+                        <span>Live Auction</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Live Properties Section -->
+            <div class="section-header">
+                <h2 class="section-title">Live Properties with Chat</h2>
+                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="properties-grid">
+                <!-- Property 1 -->
+                <div class="property-card">
+                    <div class="property-badge live">LIVE CHAT</div>
+                    <div class="property-image" style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')">
+                        <div class="property-overlay">
+                            <div>
+                                <div class="property-price">$1,250,000</div>
+                                <div class="property-price-type">For Sale • Negotiable</div>
+                            </div>
+                            <button class="property-live-chat">
+                                <i class="fas fa-comment-alt"></i> Chat Now
+                            </button>
+                        </div>
+                    </div>
+                    <div class="property-info">
+                        <div class="property-title">
+                            <h3>Modern Villa with Pool</h3>
+                            <div class="property-status">
+                                <span style="color: var(--success); font-weight: 600;">●</span> Live
+                            </div>
+                        </div>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            12 Ocean View Dr, Bondi Beach
+                        </div>
+                        <div class="property-features">
+                            <div class="feature">
+                                <i class="fas fa-bed"></i>
+                                <span>3 Beds</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-bath"></i>
+                                <span>2 Baths</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-car"></i>
+                                <span>1 Garage</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-vector-square"></i>
+                                <span>2,100 sqft</span>
+                            </div>
+                        </div>
+                        <div class="property-footer">
+                            <div class="property-agent">
+                                <div class="agent-avatar" style="background-color: var(--secondary);">SK</div>
+                                <div class="agent-info">
+                                    <h5>Sarah Kim</h5>
+                                    <p>Property Owner</p>
+                                </div>
+                            </div>
+                            <div class="property-actions">
+                                <button class="action-btn">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-phone-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Property 2 -->
+                <div class="property-card">
+                    <div class="property-badge">AUCTION</div>
+                    <div class="property-image" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')">
+                        <div class="property-overlay">
+                            <div>
+                                <div class="property-price">$890,000</div>
+                                <div class="property-price-type">Auction • 5 bids</div>
+                            </div>
+                            <button class="property-live-chat">
+                                <i class="fas fa-gavel"></i> Bid Now
+                            </button>
+                        </div>
+                    </div>
+                    <div class="property-info">
+                        <div class="property-title">
+                            <h3>City Center Apartment</h3>
+                            <div class="property-status">
+                                <span style="color: var(--warning); font-weight: 600;">●</span> Active
+                            </div>
+                        </div>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            45 King Street, Melbourne CBD
+                        </div>
+                        <div class="property-features">
+                            <div class="feature">
+                                <i class="fas fa-bed"></i>
+                                <span>2 Beds</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-bath"></i>
+                                <span>2 Baths</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-car"></i>
+                                <span>1 Garage</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-vector-square"></i>
+                                <span>1,200 sqft</span>
+                            </div>
+                        </div>
+                        <div class="property-footer">
+                            <div class="property-agent">
+                                <div class="agent-avatar" style="background-color: var(--accent);">MR</div>
+                                <div class="agent-info">
+                                    <h5>Michael Ross</h5>
+                                    <p>Auction Agent</p>
+                                </div>
+                            </div>
+                            <div class="property-actions">
+                                <button class="action-btn">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-gavel"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Property 3 -->
+                <div class="property-card">
+                    <div class="property-badge live">LIVE NOW</div>
+                    <div class="property-image" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')">
+                        <div class="property-overlay">
+                            <div>
+                                <div class="property-price">$650/wk</div>
+                                <div class="property-price-type">For Rent • Available Now</div>
+                            </div>
+                            <button class="property-live-chat">
+                                <i class="fas fa-video"></i> Virtual Tour
+                            </button>
+                        </div>
+                    </div>
+                    <div class="property-info">
+                        <div class="property-title">
+                            <h3>Suburban Family Home</h3>
+                            <div class="property-status">
+                                <span style="color: var(--success); font-weight: 600;">●</span> Live
+                            </div>
+                        </div>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            78 Park Ave, Sydney Suburbs
+                        </div>
+                        <div class="property-features">
+                            <div class="feature">
+                                <i class="fas fa-bed"></i>
+                                <span>4 Beds</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-bath"></i>
+                                <span>3 Baths</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-car"></i>
+                                <span>2 Garages</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-vector-square"></i>
+                                <span>2,800 sqft</span>
+                            </div>
+                        </div>
+                        <div class="property-footer">
+                            <div class="property-agent">
+                                <div class="agent-avatar" style="background-color: var(--primary);">AL</div>
+                                <div class="agent-info">
+                                    <h5>Amanda Lee</h5>
+                                    <p>Rental Agent</p>
+                                </div>
+                            </div>
+                            <div class="property-actions">
+                                <button class="action-btn">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Live Auctions Section -->
+            <div class="live-auctions">
+                <div class="section-header">
+                    <h2 class="section-title">Live Property Auctions</h2>
+                    <a href="#" class="view-all">Join Auction <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                
+                <div class="auction-cards">
+                    <div class="auction-card">
+                        <div class="auction-header">
+                            <div class="auction-title">Luxury Penthouse</div>
+                            <div class="auction-timer">
+                                <i class="fas fa-clock"></i> 12:45
+                            </div>
+                        </div>
+                        <div class="auction-price">$2.1M</div>
+                        <div class="auction-bids">Current bid • 8 active bidders</div>
+                        <div class="auction-location">
+                            <i class="fas fa-map-marker-alt"></i> Melbourne CBD
+                        </div>
+                        <button class="auction-bid-btn">Place Bid Now</button>
+                    </div>
+                    
+                    <div class="auction-card">
+                        <div class="auction-header">
+                            <div class="auction-title">Waterfront Villa</div>
+                            <div class="auction-timer">
+                                <i class="fas fa-clock"></i> 24:12
+                            </div>
+                        </div>
+                        <div class="auction-price">$3.4M</div>
+                        <div class="auction-bids">Current bid • 5 active bidders</div>
+                        <div class="auction-location">
+                            <i class="fas fa-map-marker-alt"></i> Gold Coast
+                        </div>
+                        <button class="auction-bid-btn">Join Auction</button>
+                    </div>
+                    
+                    <div class="auction-card">
+                        <div class="auction-header">
+                            <div class="auction-title">Commercial Building</div>
+                            <div class="auction-timer">
+                                <i class="fas fa-clock"></i> 05:30
+                            </div>
+                        </div>
+                        <div class="auction-price">$5.8M</div>
+                        <div class="auction-bids">Current bid • 12 active bidders</div>
+                        <div class="auction-location">
+                            <i class="fas fa-map-marker-alt"></i> Sydney CBD
+                        </div>
+                        <button class="auction-bid-btn">Place Bid</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chat Sidebar -->
+        <div class="chat-sidebar">
+            <div class="chat-header">
+                <h3 class="chat-title">Live Chats</h3>
+                <div class="chat-status">
+                    <span style="color: var(--success);">●</span> Online
+                </div>
+            </div>
+            
+            <div class="chat-tabs">
+                <button class="chat-tab active">All Chats</button>
+                <button class="chat-tab">Agents</button>
+                <button class="chat-tab">Owners</button>
+            </div>
+            
+            <div class="chat-list">
+                <div class="chat-item active">
+                    <div class="chat-avatar online" style="background-color: var(--secondary);">SK</div>
+                    <div class="chat-info">
+                        <div class="chat-name">Sarah Kim</div>
+                        <div class="chat-preview">Hi! I can schedule a viewing for tomorrow...</div>
+                    </div>
+                    <div class="chat-meta">
+                        <div class="chat-time">12:45</div>
+                        <div class="chat-unread">3</div>
+                    </div>
+                </div>
+                
+                <div class="chat-item">
+                    <div class="chat-avatar online" style="background-color: var(--primary);">AL</div>
+                    <div class="chat-info">
+                        <div class="chat-name">Amanda Lee</div>
+                        <div class="chat-preview">The virtual tour is available now...</div>
+                    </div>
+                    <div class="chat-meta">
+                        <div class="chat-time">11:20</div>
+                    </div>
+                </div>
+                
+                <div class="chat-item">
+                    <div class="chat-avatar" style="background-color: var(--accent);">MR</div>
+                    <div class="chat-info">
+                        <div class="chat-name">Michael Ross</div>
+                        <div class="chat-preview">Your bid has been placed successfully...</div>
+                    </div>
+                    <div class="chat-meta">
+                        <div class="chat-time">Yesterday</div>
+                        <div class="chat-unread">1</div>
+                    </div>
+                </div>
+                
+                <div class="chat-item">
+                    <div class="chat-avatar online" style="background-color: #FF9F43;">TJ</div>
+                    <div class="chat-info">
+                        <div class="chat-name">Thomas Jones</div>
+                        <div class="chat-preview">I have a new property that matches your...</div>
+                    </div>
+                    <div class="chat-meta">
+                        <div class="chat-time">10:15</div>
+                    </div>
+                </div>
+                
+                <div class="chat-item">
+                    <div class="chat-avatar" style="background-color: #6AB04C;">ER</div>
+                    <div class="chat-info">
+                        <div class="chat-name">Emma Roberts</div>
+                        <div class="chat-preview">The contract documents are ready for...</div>
+                    </div>
+                    <div class="chat-meta">
+                        <div class="chat-time">Friday</div>
+                    </div>
+                </div>
+                
+                <div class="chat-item">
+                    <div class="chat-avatar online" style="background-color: #4834d4;">DR</div>
+                    <div class="chat-info">
+                        <div class="chat-name">David Rodriguez</div>
+                        <div class="chat-preview">Live auction starting in 15 minutes...</div>
+                    </div>
+                    <div class="chat-meta">
+                        <div class="chat-time">09:30</div>
+                        <div class="chat-unread">2</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Chat functionality
+            const chatItems = document.querySelectorAll('.chat-item');
+            const propertyChatBtns = document.querySelectorAll('.property-live-chat');
+            const auctionBidBtns = document.querySelectorAll('.auction-bid-btn');
+            
+            // Chat item click
+            chatItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    chatItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // In a real app, this would load the chat messages
+                    const chatName = this.querySelector('.chat-name').textContent;
+                    console.log(`Opening chat with ${chatName}`);
+                });
+            });
+            
+            // Property chat button click
+            propertyChatBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const propertyCard = this.closest('.property-card');
+                    const propertyTitle = propertyCard.querySelector('.property-title h3').textContent;
+                    
+                    alert(`Starting live chat for: ${propertyTitle}`);
+                    // In a real app, this would open a chat window with the property owner/agent
+                });
+            });
+            
+            // Auction bid button click
+            auctionBidBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const auctionCard = this.closest('.auction-card');
+                    const auctionTitle = auctionCard.querySelector('.auction-title').textContent;
+                    const auctionPrice = auctionCard.querySelector('.auction-price').textContent;
+                    
+                    const bidAmount = prompt(`Enter your bid amount for ${auctionTitle} (Current: ${auctionPrice})`, auctionPrice);
+                    
+                    if (bidAmount) {
+                        alert(`Bid of ${bidAmount} placed successfully! You will be notified if you win.`);
+                        // In a real app, this would submit the bid to the server
+                    }
+                });
+            });
+            
+            // Search functionality
+            const searchBox = document.querySelector('.search-box');
+            searchBox.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const searchTerm = this.value.trim();
+                    if (searchTerm) {
+                        alert(`Searching for: "${searchTerm}"`);
+                        // In a real app, this would trigger a search
+                    }
+                }
+            });
+            
+            // Live auction button in header
+            const liveAuctionBtn = document.querySelector('.live-auction-btn');
+            liveAuctionBtn.addEventListener('click', function() {
+                alert('Redirecting to live auction room...');
+                // In a real app, this would open a live auction interface
+            });
+            
+            // Notification button
+            const notificationBtn = document.querySelector('.notification-btn');
+            notificationBtn.addEventListener('click', function() {
+                alert('You have 3 new notifications:\n1. New message from Sarah\n2. Auction reminder in 30 mins\n3. Property price drop alert');
+                // In a real app, this would show a dropdown with notifications
+            });
+            
+            // Simulate live updates
+            setInterval(() => {
+                // Randomly update auction timers
+                const auctionTimers = document.querySelectorAll('.auction-timer');
+                auctionTimers.forEach(timer => {
+                    const timeText = timer.textContent.split(' ')[1];
+                    let [minutes, seconds] = timeText.split(':').map(Number);
+                    
+                    if (seconds > 0) {
+                        seconds--;
+                    } else if (minutes > 0) {
+                        minutes--;
+                        seconds = 59;
+                    }
+                    
+                    timer.innerHTML = `<i class="fas fa-clock"></i> ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                });
+                
+                // Randomly update online status for some agents
+                const chatAvatars = document.querySelectorAll('.chat-avatar');
+                chatAvatars.forEach(avatar => {
+                    if (Math.random() > 0.7) {
+                        avatar.classList.toggle('online');
+                    }
+                });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
