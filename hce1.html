@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyderabad Consulting Engineers | Professional Engineering Solutions</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #d62828;
+            --secondary-gray: #6c757d;
+            --dark-black: #212529;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--dark-black);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+        
+        /* Header Styles */
+        .top-bar {
+            background-color: var(--dark-black);
+            color: white;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+        
+        .top-bar a {
+            color: var(--primary-red);
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        
+        .top-bar a:hover {
+            color: white;
+        }
+        
+        .main-header {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 28px;
+            color: var(--primary-red);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--dark-black);
+        }
+        
+        .navbar-nav .nav-link {
+            color: var(--dark-black);
+            font-weight: 500;
+            margin: 0 8px;
+            padding: 8px 16px !important;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active {
+            background-color: var(--primary-red);
+            color: white;
+        }
+        
+        /* Slider Styles */
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            height: 85vh;
+            min-height: 600px;
+        }
+        
+        .slider {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .slide.slide-left {
+            transform: translateX(-100%);
+        }
+        
+        .slide.slide-right {
+            transform: translateX(100%);
+        }
+        
+        .slide-content {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 40px;
+            border-radius: 8px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            width: 90%;
+        }
+        
+        .slide-text {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 30px;
+        }
+        
+        .slide-running-text {
+            flex: 1;
+            min-width: 300px;
+            max-height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .running-text-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            animation: scrollText 20s linear infinite;
+        }
+        
+        @keyframes scrollText {
+            0% {
+                top: 100%;
+            }
+            100% {
+                top: -100%;
+            }
+        }
+        
+        .slide h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        .slide p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .btn-slider {
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-slider:hover {
+            background-color: #b02020;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Section Styles */
+        .section-title {
+            position: relative;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        
+        .section-title h2 {
+            color: var(--dark-black);
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-red);
+        }
+        
+        .section-bg {
+            background-color: var(--light-gray);
+            padding: 80px 0;
+        }
+        
+        .section-colored {
+            background-color: var(--primary-red);
+            color: white;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-colored h2, .section-colored h3 {
+            color: white;
+        }
+        
+        .section-colored .section-title h2:after {
+            background-color: white;
+        }
+        
+        /* Shapes Animation */
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: 0;
+        }
+        
+        .shape-1 {
+            width: 200px;
+            height: 200px;
+            top: -50px;
+            left: -50px;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .shape-2 {
+            width: 150px;
+            height: 150px;
+            bottom: -30px;
+            right: 10%;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+        
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            right: -30px;
+            animation: float 12s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+        
+        /* Welcome Section */
+        .welcome-section {
+            padding: 100px 0;
+        }
+        
+        .icon-box {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+        
+        .icon-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .icon-box i {
+            font-size: 2.5rem;
+            color: var(--primary-red);
+            margin-bottom: 20px;
+        }
+        
+        .icon-box h4 {
+            margin-bottom: 15px;
+            color: var(--dark-black);
+        }
+        
+        /* Image with Text Section */
+        .img-text-section {
+            padding: 80px 0;
+        }
+        
+        .img-text-section img {
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .img-text-section img:hover {
+            transform: scale(1.02);
+        }
+        
+        /* Clients Section */
+        .clients-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .client-slider {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+        
+        .client-track {
+            display: flex;
+            animation: scroll 30s linear infinite;
+            width: calc(200px * 14);
+        }
+        
+        .client-slide {
+            height: 120px;
+            width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 20px;
+        }
+        
+        .client-slide img {
+            max-width: 160px;
+            max-height: 80px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .client-slide img:hover {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+        
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-200px * 7));
+            }
+        }
+        
+        /* Footer Styles */
+        .main-footer {
+            background-color: var(--dark-black);
+            color: white;
+            padding-top: 70px;
+        }
+        
+        .footer-widget h4 {
+            color: white;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            position: relative;
+        }
+        
+        .footer-widget h4:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-red);
+        }
+        
+        .footer-widget ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .footer-widget ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-widget ul li a {
+            color: var(--medium-gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-widget ul li a:hover {
+            color: var(--primary-red);
+            padding-left: 5px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-red);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(214, 40, 40, 0.7);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary-red) 0%, transparent 0%);
+            z-index: -1;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .slide h1 {
+                font-size: 2.5rem;
+            }
+            
+            .slide-content {
+                flex-direction: column;
+            }
+            
+            .slide-text {
+                padding-right: 0;
+                margin-bottom: 30px;
+            }
+            
+            .slider-container {
+                height: 70vh;
+                min-height: 500px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .slide h1 {
+                font-size: 2rem;
+            }
+            
+            .slider-container {
+                height: 60vh;
+                min-height: 400px;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .slide h1 {
+                font-size: 1.8rem;
+            }
+            
+            .slide p {
+                font-size: 1rem;
+            }
+            
+            .slider-container {
+                height: 50vh;
+                min-height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Contact Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <a href="mailto:info@hyderabadconsulting.com"><i class="fas fa-envelope"></i> hce@hcengineers.com</a>
+                    <a href="tel:+919876543210"><i class="fas fa-phone"></i> +91 - 40 - 40177078, 27801862</a>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <span><i class="far fa-clock"></i> Mon-Fri: 9:00 AM - 6:00 PM</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand logo" href="#"><span>Hyderabad</span><br> Consulting Engineers</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">HOME</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#consultancy">Consultancy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#services">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#clientele">Clientele</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Image Slider -->
+    <section class="slider-container">
+        <div class="slider">
+            <!-- Slide 1 -->
+            <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <h1>Engineering Excellence</h1>
+                        <p>Providing innovative engineering solutions for over 20 years with a commitment to quality and sustainability.</p>
+                        <button class="btn-slider">Explore Our Services</button>
+                    </div>
+                    <div class="slide-running-text">
+                        <div class="running-text-content">
+                            <p>At Hyderabad Consulting Engineers, we pride ourselves on delivering cutting-edge engineering solutions that stand the test of time. Our team of experienced professionals works tirelessly to ensure every project meets the highest standards of safety, efficiency, and innovation.</p>
+                            <p>With a portfolio spanning infrastructure, construction, industrial projects, and urban development, we bring technical expertise and creative problem-solving to every challenge. Our commitment to sustainability ensures that our projects not only meet today's needs but also safeguard resources for future generations.</p>
+                            <p>We believe in collaborative partnerships with our clients, working closely to understand their unique requirements and deliver customized solutions that exceed expectations. From concept to completion, we manage every aspect of the engineering process with precision and care.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slide 2 -->
+            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <h1>Innovative Solutions</h1>
+                        <p>Advanced engineering approaches to solve complex challenges in infrastructure and development.</p>
+                        <button class="btn-slider">Our Consultancy</button>
+                    </div>
+                    <div class="slide-running-text">
+                        <div class="running-text-content">
+                            <p>Innovation is at the heart of everything we do. Our engineering team constantly researches and implements the latest technologies and methodologies to deliver superior results. We specialize in integrating smart solutions into traditional engineering frameworks.</p>
+                            <p>Our approach combines technical expertise with creative thinking to develop solutions that are both practical and forward-thinking. We leverage advanced software, simulation tools, and data analytics to optimize designs and predict performance under various conditions.</p>
+                            <p>From sustainable building materials to energy-efficient systems, we prioritize innovations that reduce environmental impact while enhancing functionality and longevity. Our clients benefit from solutions that not only meet regulatory requirements but also provide competitive advantages in their respective markets.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slide 3 -->
+            <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <h1>Global Expertise</h1>
+                        <p>Bringing international engineering standards to local projects with precision and care.</p>
+                        <button class="btn-slider">Meet Our Team</button>
+                    </div>
+                    <div class="slide-running-text">
+                        <div class="running-text-content">
+                            <p>With experience spanning multiple continents and project types, our team brings a global perspective to every engineering challenge. We combine international best practices with deep local knowledge to deliver solutions that are both globally competitive and locally relevant.</p>
+                            <p>Our engineers have worked on landmark projects around the world, gaining insights into diverse construction methodologies, materials, and regulatory environments. This cross-cultural experience enriches our problem-solving capabilities and enables us to adapt successful approaches from other markets.</p>
+                            <p>We maintain partnerships with leading engineering firms worldwide, ensuring we stay at the forefront of technological advancements and industry trends. This global network allows us to bring specialized expertise to complex projects and tackle challenges that require international collaboration.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Welcome Section -->
+    <section id="about" class="welcome-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Welcome to Hyderabad Consulting Engineers</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="icon-box">
+                        <i class="fas fa-drafting-compass"></i>
+                        <h4>Expert Engineering</h4>
+                        <p>Our team of certified engineers brings decades of experience across multiple disciplines including civil, structural, mechanical, and electrical engineering.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="icon-box">
+                        <i class="fas fa-handshake"></i>
+                        <h4>Client Partnership</h4>
+                        <p>We believe in building lasting relationships with our clients through transparent communication, reliable delivery, and exceptional service.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="icon-box">
+                        <i class="fas fa-leaf"></i>
+                        <h4>Sustainable Solutions</h4>
+                        <p>We integrate sustainable practices into all our projects, focusing on energy efficiency, environmental protection, and long-term viability.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image with Text Section -->
+    <section id="services" class="img-text-section section-bg">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <!-- <img src="https://images.unsplash.com/photo-1503387769-00a112127ca0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80" alt="Engineering Services" class="img-fluid"> -->
+                    <img src="img01.jpg" alt="Engineering Services" class="img-fluid">
+                </div>
+                <div class="col-lg-6">
+                    <div class="section-title text-start">
+                        <h2>Our Comprehensive Services</h2>
+                    </div>
+                    <p>We offer a complete range of engineering consultancy services tailored to meet the diverse needs of our clients across various sectors.</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Structural Design & Analysis</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Construction Project Management</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Infrastructure Planning & Development</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Environmental Impact Assessments</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Building Information Modeling (BIM)</li>
+                        <li class="mb-3"><i class="fas fa-check-circle text-primary me-2"></i> Feasibility Studies & Technical Reports</li>
+                    </ul>
+                    <button class="btn-slider mt-3">View All Services</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Colored Section with Shapes -->
+    <section id="consultancy" class="section-colored">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Our Consultancy?</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="text-center p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-award fa-3x"></i>
+                        </div>
+                        <h4>Quality Assurance</h4>
+                        <p>We adhere to international quality standards with rigorous quality control processes at every project stage.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="text-center p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-clock fa-3x"></i>
+                        </div>
+                        <h4>Timely Delivery</h4>
+                        <p>Our project management expertise ensures that all deliverables are completed within the agreed timeframe.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="text-center p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-rupee-sign fa-3x"></i>
+                        </div>
+                        <h4>Cost-Effective Solutions</h4>
+                        <p>We optimize designs and processes to deliver maximum value while minimizing project costs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Clients Section -->
+    <section id="clientele" class="clients-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Clients</h2>
+                <p class="text-muted">We are proud to have worked with these leading organizations</p>
+            </div>
+            <div class="client-slider">
+                <div class="client-track">
+                    <!-- Client logos would be added here -->
+                    <div class="client-slide">
+                        <img src="c1.jpg" alt="Client 1">
+                    </div>
+                    <div class="client-slide">
+                        <img src="c2.jpg" alt="Client 2">
+                    </div>
+                    <div class="client-slide">
+                        <img src="c3.jpg" alt="Client 3">
+                    </div>
+                    <div class="client-slide">
+                        <img src="c4.jpg" alt="Client 4">
+                    </div>
+                    <div class="client-slide">
+                        <img src="c5.jpg" alt="Client 5">
+                    </div>
+                    <div class="client-slide">
+                        <img src="c6.jpg" alt="Client 6">
+                    </div>
+                    <div class="client-slide">
+                        <img src="c7.jpg" alt="Client 7">
+                    </div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="client-slide">
+                        <img src="c1.jpg" alt="Client 1">
+                    </div>
+                    <div class="client-slide">
+                        <img src="c2.jpg" alt="Client 2">
+                    </div>
+                    <div class="client-slide">
+                        <img src="c3.jpg" alt="Client 3">
+                    </div>
+                    <div class="client-slide">
+                        <img src="c4.jpg" alt="Client 4">
+                    </div>
+                    <div class="client-slide">
+                        <img src="c5.jpg" alt="Client 5">
+                    </div>
+                    <div class="client-slide">
+                        <img src="c6.jpg" alt="Client 6">
+                    </div>
+                    <div class="client-slide">
+                        <img src="c7.jpg" alt="Client 7">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="footer-widget">
+                        <h4>Hyderabad Consulting Engineers</h4>
+                        <p>Leading engineering consultancy firm providing innovative solutions for infrastructure, construction, and industrial projects with a commitment to excellence and sustainability.</p>
+                        <div class="social-links mt-4">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <div class="footer-widget">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#consultancy">Consultancy</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><a href="#clientele">Clientele</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="footer-widget">
+                        <h4>Our Services</h4>
+                        <ul>
+                            <li><a href="#">Structural Engineering</a></li>
+                            <li><a href="#">Project Management</a></li>
+                            <li><a href="#">Infrastructure Planning</a></li>
+                            <li><a href="#">Environmental Consulting</a></li>
+                            <li><a href="#">Technical Feasibility</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="footer-widget">
+                        <h4>Contact Us</h4>
+                        <ul class="contact-info">
+                            <li><i class="fas fa-map-marker-alt me-2"></i> 123 Engineering Tower, Hyderabad, TS 500001</li>
+                            <li><i class="fas fa-phone me-2"></i> +91 98765 43210</li>
+                            <li><i class="fas fa-envelope me-2"></i> info@hyderabadconsulting.com</li>
+                            <li><i class="far fa-clock me-2"></i> Mon-Fri: 9:00 AM - 6:00 PM</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>&copy; 2023 Hyderabad Consulting Engineers. All Rights Reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p>Designed with <i class="fas fa-heart text-danger"></i> for Engineering Excellence</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top">
+        <div class="scroll-progress"></div>
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Image Slider Functionality
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+        const slideInterval = 5000; // 5 seconds
+        
+        function nextSlide() {
+            // Determine slide direction
+            const direction = currentSlide % 2 === 0 ? 'slide-right' : 'slide-left';
+            
+            // Remove active class from current slide with direction
+            slides[currentSlide].classList.remove('active');
+            slides[currentSlide].classList.add(direction);
+            
+            // Move to next slide
+            currentSlide = (currentSlide + 1) % slides.length;
+            
+            // Reset classes for next slide
+            slides[currentSlide].classList.remove('slide-left', 'slide-right');
+            slides[currentSlide].classList.add('active');
+        }
+        
+        // Start the slider
+        let sliderTimer = setInterval(nextSlide, slideInterval);
+        
+        // Pause slider on hover
+        const sliderContainer = document.querySelector('.slider-container');
+        sliderContainer.addEventListener('mouseenter', () => {
+            clearInterval(sliderTimer);
+        });
+        
+        sliderContainer.addEventListener('mouseleave', () => {
+            sliderTimer = setInterval(nextSlide, slideInterval);
+        });
+        
+        // Scroll to Top Button Functionality
+        const scrollToTopBtn = document.querySelector('.scroll-to-top');
+        const scrollProgress = document.querySelector('.scroll-progress');
+        
+        window.addEventListener('scroll', () => {
+            const scrollTotal = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPosition = document.documentElement.scrollTop;
+            const scrollPercentage = (scrollPosition / scrollTotal) * 100;
+            
+            // Show/hide button based on scroll position
+            if (scrollPosition > 300) {
+                scrollToTopBtn.classList.add('active');
+            } else {
+                scrollToTopBtn.classList.remove('active');
+            }
+            
+            // Update progress circle
+            scrollProgress.style.background = `conic-gradient(var(--primary-red) ${scrollPercentage}%, transparent ${scrollPercentage}%)`;
+        });
+        
+        // Scroll to top when button is clicked
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Navbar active state on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if(scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Initialize the active state for home
+        document.addEventListener('DOMContentLoaded', () => {
+            const homeLink = document.querySelector('.navbar-nav .nav-link[href="#"]');
+            if(homeLink && window.scrollY < 100) {
+                homeLink.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
