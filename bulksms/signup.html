@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | BulkSMS Account | SMS Management</title>
+    
+    <meta name="description" content="BulkSMS dashboard to manage SMS campaigns, check balance, view reports, and manage API keys.">
+    <meta name="keywords" content="bulk sms dashboard, sms campaign management, sms balance, sms reports, api keys">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --primary-blue: #0a58ca;
+            --secondary-blue: #3d8bfd;
+            --primary-orange: #fd7e14;
+            --light-blue: #e7f1ff;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .sidebar {
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 250px;
+            z-index: 100;
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary-blue);
+        }
+        
+        .stats-card.orange {
+            border-left-color: var(--primary-orange);
+        }
+        
+        .stats-card.green {
+            border-left-color: #28a745;
+        }
+        
+        .stats-card.purple {
+            border-left-color: #6f42c1;
+        }
+        
+        .stats-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .stats-icon.blue {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+        }
+        
+        .stats-icon.orange {
+            background: #fff3e8;
+            color: var(--primary-orange);
+        }
+        
+        .stats-icon.green {
+            background: #e8f5e9;
+            color: #28a745;
+        }
+        
+        .stats-icon.purple {
+            background: #f3e8ff;
+            color: #6f42c1;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .quick-action {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            height: 100%;
+            transition: transform 0.3s;
+        }
+        
+        .quick-action:hover {
+            transform: translateY(-5px);
+        }
+        
+        .recent-activity {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .activity-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .sidebar-logo {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .sidebar-logo img {
+            height: 40px;
+        }
+        
+        .sidebar-nav {
+            padding: 20px 0;
+        }
+        
+        .nav-link {
+            padding: 12px 20px;
+            color: #495057;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            margin: 5px 0;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            border-left-color: var(--primary-blue);
+        }
+        
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .user-dropdown img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+        
+        .balance-card {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 25px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar d-none d-lg-block">
+        <div class="sidebar-logo">
+            <img src="bulksms_logo.png" alt="BulkSMS Logo">
+            <p class="small text-muted mt-2 mb-0">Dashboard</p>
+        </div>
+        
+        <div class="sidebar-nav">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-send"></i> Send SMS
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-clock-history"></i> Schedule SMS
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-people"></i> Contacts
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-bar-chart"></i> Reports
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-key"></i> API Keys
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-wallet2"></i> Billing
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-gear"></i> Settings
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer p-3">
+            <div class="balance-card">
+                <h6 class="opacity-75 mb-2">Account Balance</h6>
+                <h3 class="fw-bold mb-0">₹1,250.50</h3>
+                <p class="small mb-0 mt-2 opacity-75">1,042 SMS Credits Available</p>
+                <a href="#" class="btn btn-light btn-sm mt-3 w-100">Add Credits</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navbar -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <button class="btn btn-outline-secondary d-lg-none me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMobile">
+                    <i class="bi bi-list"></i>
+                </button>
+                
+                <div class="navbar-brand d-lg-none">
+                    <img src="bulksms_logo.png" alt="BulkSMS Logo" height="30">
+                </div>
+                
+                <div class="d-flex align-items-center ms-auto">
+                    <div class="me-3 d-none d-md-block">
+                        <span class="text-muted">Welcome back,</span>
+                        <span class="fw-bold">Demo User</span>
+                    </div>
+                    
+                    <div class="dropdown">
+                        <button class="btn btn-link dropdown-toggle text-decoration-none" type="button" data-bs-toggle="dropdown">
+                            <div class="user-dropdown d-flex align-items-center">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2" style="width: 35px; height: 35px;">
+                                    <i class="bi bi-person"></i>
+                                </div>
+                                <span class="d-none d-md-inline">Account</span>
+                            </div>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>My Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-question-circle me-2"></i>Help</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="index.html"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Sidebar (Offcanvas) -->
+        <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="sidebarMobile">
+            <div class="offcanvas-header">
+                <img src="bulksms_logo.png" alt="BulkSMS Logo" height="30">
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="balance-card mb-4">
+                    <h6 class="opacity-75 mb-2">Account Balance</h6>
+                    <h3 class="fw-bold mb-0">₹1,250.50</h3>
+                    <p class="small mb-0 mt-2 opacity-75">1,042 SMS Credits Available</p>
+                    <a href="#" class="btn btn-light btn-sm mt-3 w-100">Add Credits</a>
+                </div>
+                
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-send"></i> Send SMS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-clock-history"></i> Schedule SMS
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-people"></i> Contacts
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-bar-chart"></i> Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-key"></i> API Keys
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-wallet2"></i> Billing
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-gear"></i> Settings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="container-fluid">
+            <!-- Stats Cards -->
+            <div class="row g-4 mb-4">
+                <div class="col-xl-3 col-md-6">
+                    <div class="stats-card">
+                        <div class="stats-icon blue">
+                            <i class="bi bi-send"></i>
+                        </div>
+                        <h3 class="fw-bold">1,248</h3>
+                        <p class="text-muted mb-0">SMS Sent Today</p>
+                        <span class="badge bg-success">+12%</span>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6">
+                    <div class="stats-card orange">
+                        <div class="stats-icon orange">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                        <h3 class="fw-bold">98.7%</h3>
+                        <p class="text-muted mb-0">Delivery Rate</p>
+                        <span class="badge bg-success">+0.5%</span>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6">
+                    <div class="stats-card green">
+                        <div class="stats-icon green">
+                            <i class="bi bi-wallet2"></i>
+                        </div>
+                        <h3 class="fw-bold">₹1,250.50</h3>
+                        <p class="text-muted mb-0">Account Balance</p>
+                        <a href="#" class="small text-decoration-none">Add Credits →</a>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-md-6">
+                    <div class="stats-card purple">
+                        <div class="stats-icon purple">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <h3 class="fw-bold">2,548</h3>
+                        <p class="text-muted mb-0">Total Contacts</p>
+                        <span class="badge bg-success">+48</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts and Quick Actions -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-8">
+                    <div class="chart-container">
+                        <h5 class="fw-bold mb-4">SMS Delivery Statistics</h5>
+                        <canvas id="deliveryChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <h5 class="fw-bold mb-4">Quick Actions</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6 col-lg-12">
+                            <div class="quick-action">
+                                <div class="stats-icon blue mb-3 mx-auto">
+                                    <i class="bi bi-send"></i>
+                                </div>
+                                <h6>Send SMS</h6>
+                                <p class="small text-muted mb-3">Send instant SMS to your contacts</p>
+                                <a href="#" class="btn btn-primary btn-sm">Send Now</a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-12">
+                            <div class="quick-action">
+                                <div class="stats-icon orange mb-3 mx-auto">
+                                    <i class="bi bi-clock-history"></i>
+                                </div>
+                                <h6>Schedule SMS</h6>
+                                <p class="small text-muted mb-3">Schedule SMS for later delivery</p>
+                                <a href="#" class="btn btn-outline-primary btn-sm">Schedule</a>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-12">
+                            <div class="quick-action">
+                                <div class="stats-icon green mb-3 mx-auto">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <h6>Add Contacts</h6>
+                                <p class="small text-muted mb-3">Import or add new contacts</p>
+                                <a href="#" class="btn btn-outline-primary btn-sm">Manage Contacts</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="recent-activity">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="fw-bold mb-0">Recent Activity</h5>
+                            <a href="#" class="small text-decoration-none">View All →</a>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">SMS Campaign Sent</h6>
+                                    <p class="small text-muted mb-0">Promotional campaign "Summer Sale" sent to 500 contacts</p>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-success">Delivered</span>
+                                    <p class="small text-muted mb-0 mt-1">10:30 AM</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">Credit Added</h6>
+                                    <p class="small text-muted mb-0">Added ₹500 to account balance via UPI</p>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-primary">Completed</span>
+                                    <p class="small text-muted mb-0 mt-1">9:15 AM</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">API Key Generated</h6>
+                                    <p class="small text-muted mb-0">New API key generated for production use</p>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-info">Created</span>
+                                    <p class="small text-muted mb-0 mt-1">Yesterday</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">Failed Delivery</h6>
+                                    <p class="small text-muted mb-0">3 SMS failed to deliver - Invalid numbers</p>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-warning">Failed</span>
+                                    <p class="small text-muted mb-0 mt-1">Yesterday</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">Contact List Updated</h6>
+                                    <p class="small text-muted mb-0">Imported 150 new contacts via CSV</p>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-success">Completed</span>
+                                    <p class="small text-muted mb-0 mt-1">2 days ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Delivery Chart
+        const ctx = document.getElementById('deliveryChart').getContext('2d');
+        const deliveryChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'SMS Sent',
+                    data: [1200, 1900, 1500, 2100, 1800, 2400, 2200],
+                    borderColor: 'rgb(10, 88, 202)',
+                    backgroundColor: 'rgba(10, 88, 202, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: 'Delivered',
+                    data: [1150, 1850, 1450, 2050, 1750, 2350, 2150],
+                    borderColor: 'rgb(40, 167, 69)',
+                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Update balance card for mobile
+        if (window.innerWidth < 768) {
+            document.querySelector('.balance-card').classList.add('mt-3');
+        }
+    </script>
+</body>
+</html>

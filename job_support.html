@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Training & Job Support Services</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Font Awesome for additional icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a2530 100%);
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 40px;
+        }
+        
+        .service-card {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+            border: 1px solid #eaeaea;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        
+        .job-support-card .service-icon {
+            color: var(--secondary-color);
+        }
+        
+        .training-card .service-icon {
+            color: var(--accent-color);
+        }
+        
+        .contact-info {
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+        
+        .tech-badge {
+            margin: 5px;
+            font-size: 0.85rem;
+        }
+        
+        .location-map {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary-color);
+        }
+        
+        .contact-link {
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
+        }
+        
+        .contact-link:hover {
+            color: var(--secondary-color);
+        }
+        
+        .support-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 50px 0;
+            }
+            
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-laptop-code me-2"></i> IT Services & Training
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#job-support">Job Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#training">Training</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold">IT Job Support & Professional Training</h1>
+                    <p class="lead">Expert guidance for React, Angular, .NET, Frontend technologies and more. Online and offline support available.</p>
+                    <a href="#contact" class="btn btn-light btn-lg mt-3">Get Support Now</a>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <img src="https://cdn.pixabay.com/photo/2018/09/27/09/22/artificial-intelligence-3706562_1280.jpg" 
+                         alt="IT Services" class="img-fluid rounded-circle" style="max-height: 250px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Job Support Section -->
+    <section id="job-support" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Job Support Services</h2>
+            <p class="lead mb-5">Get professional assistance with your projects and tasks. Available for both online and offline support.</p>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="service-card job-support-card shadow-sm">
+                        <div class="card-body p-4">
+                            <span class="badge bg-success support-badge">Online & Offline</span>
+                            <div class="service-icon">
+                                <i class="fas fa-hands-helping"></i>
+                            </div>
+                            <h3 class="h4 mb-3">Comprehensive Job Support</h3>
+                            <p>Professional assistance with your day-to-day tasks, project issues, code debugging, and implementation challenges.</p>
+                            
+                            <h5 class="mt-4 mb-3">Technologies we support:</h5>
+                            <div class="mb-4">
+                                <span class="badge bg-primary tech-badge">React</span>
+                                <span class="badge bg-primary tech-badge">Angular</span>
+                                <span class="badge bg-primary tech-badge">.NET</span>
+                                <span class="badge bg-primary tech-badge">JavaScript</span>
+                                <span class="badge bg-primary tech-badge">TypeScript</span>
+                                <span class="badge bg-primary tech-badge">HTML/CSS</span>
+                                <span class="badge bg-primary tech-badge">Bootstrap</span>
+                                <span class="badge bg-primary tech-badge">Vue.js</span>
+                                <span class="badge bg-primary tech-badge">Node.js</span>
+                                <span class="badge bg-primary tech-badge">Frontend Technologies</span>
+                            </div>
+                            
+                            <div class="d-flex align-items-center mt-4">
+                                <i class="fas fa-clock text-primary me-2"></i>
+                                <span>Flexible timing available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="contact-info h-100">
+                        <h4 class="mb-4">Contact for Job Support</h4>
+                        
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-1">Email</h6>
+                                <a href="mailto:muthyala.designer@gmail.com" class="contact-link">muthyala.designer@gmail.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="contact-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-1">WhatsApp/Call</h6>
+                                <a href="https://wa.me/919346403176" class="contact-link">+91 93464 03176</a>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-1">Location</h6>
+                                <p class="mb-0">Ameerpet, Hyderabad</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex align-items-center">
+                            <div class="contact-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-1">Support Mode</h6>
+                                <p class="mb-0">Online & Offline</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <a href="https://wa.me/919346403176" class="btn btn-success me-2">
+                                <i class="fab fa-whatsapp me-1"></i> WhatsApp
+                            </a>
+                            <a href="mailto:muthyala.designer@gmail.com" class="btn btn-outline-primary">
+                                <i class="fas fa-envelope me-1"></i> Email
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training Services Section -->
+    <section id="training" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title">Training Services</h2>
+            <p class="lead mb-5">Comprehensive training programs for all major technologies. Both online and offline classes available.</p>
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="service-card training-card bg-white p-4 shadow-sm">
+                        <div class="service-icon text-center">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h3 class="text-center mb-4">Technology Training Programs</h3>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <h5 class="mb-3"><i class="fas fa-code text-accent me-2"></i> Frontend Technologies</h5>
+                                <div class="mb-4">
+                                    <span class="badge bg-info tech-badge">HTML5</span>
+                                    <span class="badge bg-info tech-badge">CSS3</span>
+                                    <span class="badge bg-info tech-badge">JavaScript</span>
+                                    <span class="badge bg-info tech-badge">TypeScript</span>
+                                    <span class="badge bg-info tech-badge">Bootstrap</span>
+                                    <span class="badge bg-info tech-badge">jQuery</span>
+                                    <span class="badge bg-info tech-badge">SASS/SCSS</span>
+                                    <span class="badge bg-info tech-badge">Responsive Design</span>
+                                </div>
+                                
+                                <h5 class="mb-3"><i class="fab fa-react text-info me-2"></i> JavaScript Frameworks</h5>
+                                <div class="mb-4">
+                                    <span class="badge bg-success tech-badge">React JS</span>
+                                    <span class="badge bg-success tech-badge">Angular</span>
+                                    <span class="badge bg-success tech-badge">Vue.js</span>
+                                    <span class="badge bg-success tech-badge">Next.js</span>
+                                    <span class="badge bg-success tech-badge">Redux</span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <h5 class="mb-3"><i class="fas fa-server text-secondary me-2"></i> Backend & Database</h5>
+                                <div class="mb-4">
+                                    <span class="badge bg-warning tech-badge">.NET</span>
+                                    <span class="badge bg-warning tech-badge">Node.js</span>
+                                    <span class="badge bg-warning tech-badge">Express.js</span>
+                                    <span class="badge bg-warning tech-badge">MongoDB</span>
+                                    <span class="badge bg-warning tech-badge">SQL</span>
+                                    <span class="badge bg-warning tech-badge">REST APIs</span>
+                                    <span class="badge bg-warning tech-badge">GraphQL</span>
+                                </div>
+                                
+                                <h5 class="mb-3"><i class="fas fa-tools text-primary me-2"></i> Tools & DevOps</h5>
+                                <div class="mb-4">
+                                    <span class="badge bg-dark tech-badge">Git & GitHub</span>
+                                    <span class="badge bg-dark tech-badge">Docker</span>
+                                    <span class="badge bg-dark tech-badge">Webpack</span>
+                                    <span class="badge bg-dark tech-badge">VS Code</span>
+                                    <span class="badge bg-dark tech-badge">Agile/Scrum</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-laptop-house text-success fa-lg me-3"></i>
+                                    <div>
+                                        <h5 class="mb-1">Online Training</h5>
+                                        <p class="mb-0">Live interactive sessions with hands-on practice</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-user-friends text-primary fa-lg me-3"></i>
+                                    <div>
+                                        <h5 class="mb-1">Offline Training</h5>
+                                        <p class="mb-0">Classroom training at Ameerpet, Hyderabad</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-4">
+                            <a href="#contact" class="btn btn-danger btn-lg">
+                                <i class="fas fa-graduation-cap me-2"></i> Enquire for Training
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Location Section -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            
+            <div class="row">
+                <div class="col-lg-7 mb-4">
+                    <div class="contact-info h-100">
+                        <h4 class="mb-4">Contact Information</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="d-flex">
+                                    <div class="contact-icon me-3">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Email Address</h6>
+                                        <a href="mailto:muthyala.designer@gmail.com" class="contact-link">muthyala.designer@gmail.com</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-4">
+                                <div class="d-flex">
+                                    <div class="contact-icon me-3">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Phone/WhatsApp</h6>
+                                        <a href="tel:+919346403176" class="contact-link">+91 93464 03176</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 mb-4">
+                                <div class="d-flex">
+                                    <div class="contact-icon me-3">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div>
+                                        <h6>Location</h6>
+                                        <p class="mb-0">Ameerpet, Hyderabad, Telangana, India</p>
+                                        <small class="text-muted">Specific address available upon request</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h5>Service Hours</h5>
+                            <p>Monday - Saturday: 9:00 AM - 8:00 PM</p>
+                            <p>Sunday: 10:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-5 mb-4">
+                    <div class="location-map h-100">
+                        <img src="https://maps.googleapis.com/maps/api/staticmap?center=ameerpet,hyderabad&zoom=15&size=600x400&scale=2&markers=color:red%7Cameerpet,hyderabad&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8" 
+                             alt="Location Map - Ameerpet, Hyderabad" class="img-fluid w-100 h-100" style="object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-laptop-code me-2"></i> IT Services & Training</h5>
+                    <p>Providing professional job support and comprehensive training in React, Angular, .NET and all frontend technologies.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#job-support" class="text-light text-decoration-none">Job Support</a></li>
+                        <li><a href="#training" class="text-light text-decoration-none">Training</a></li>
+                        <li><a href="#contact" class="text-light text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="fas fa-envelope me-2"></i>
+                            <a href="mailto:muthyala.designer@gmail.com" class="text-light text-decoration-none">Email</a>
+                        </li>
+                        <li>
+                            <i class="fab fa-whatsapp me-2"></i>
+                            <a href="https://wa.me/919346403176" class="text-light text-decoration-none">WhatsApp</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center pt-3">
+                <p>&copy; 2023 IT Services & Training. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add active class to nav links on scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if(pageYOffset >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

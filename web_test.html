@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Hide/Show Animation</title>
+    <style>
+        body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.animation-container {
+    position: relative;
+    width: 300px; /* Adjust size as needed */
+    height: 500px; /* Adjust size as needed */
+}
+
+.svg-design {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Base styles for the SVG shapes */
+.svg-shape {
+    /* Use a transition for smooth fading between hide/show */
+    transition: opacity 0.5s ease-in-out;
+    opacity: 1; /* Initial state is fully visible */
+    stroke: none; /* No border for a clean look */
+}
+
+.red {
+    fill: #D92323; /* Brighter red */
+}
+
+.dark-red {
+    fill: #8B0000; /* Darker red */
+}
+
+/* Styles for the "Switchgear" part (simplified) */
+.switchgear-info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 20px;
+    background-color: white;
+    /* This creates the simplified hexagon/box look, use clip-path for a true hexagon */
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.icon-circle {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #8B0000;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.switchgear-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.switchgear-info p {
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin: 0;
+}
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <div class="animation-container">
+        <svg viewBox="0 0 300 500" class="svg-design">
+            <path id="shape1" class="svg-shape red" d="M 0 0 L 150 0 L 75 75 Z" />
+            <path id="shape2" class="svg-shape dark-red" d="M 150 0 L 300 0 L 150 150 Z" />
+            <path id="shape3" class="svg-shape red" d="M 0 0 L 75 75 L 0 150 Z" />
+            <path id="shape4" class="svg-shape dark-red" d="M 75 75 L 150 150 L 75 225 Z" />
+            
+            <path id="shape5" class="svg-shape red" d="M 0 350 L 150 350 L 75 425 Z" />
+
+            </svg>
+
+        <div class="switchgear-info">
+            <div class="icon-circle">
+                 <svg viewBox="0 0 24 24" class="switchgear-icon">
+                    <path fill="#8B0000" d="M21 4H3C1.9 4 1 4.9 1 6V18C1 19.1 1.9 20 3 20H21C22.1 20 23 19.1 23 18V6C23 4.9 22.1 4 21 4M10 18H5V6H10V18M11 18V6H16V18H11M17 18V6H22V18H17Z"/>
+                    </svg>
+            </div>
+            <p>Switchgear</p>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+    const shapes = [
+        $('#shape1'),
+        $('#shape2'),
+        $('#shape3'),
+        $('#shape4'),
+        $('#shape5')
+    ];
+    const totalShapes = shapes.length;
+    const hideDuration = 500; // Time it takes to hide (in ms)
+    const showDuration = 500; // Time it takes to show (in ms)
+    const delayBetweenShapes = 300; // Pause between animating each shape (in ms)
+    const cyclePause = 1500; // Pause before starting the *show* phase after *hide* phase (in ms)
+
+    /**
+     * Hides the shapes sequentially.
+     * @param {number} index - The current shape index to animate.
+     */
+    function animateHide(index = 0) {
+        if (index >= totalShapes) {
+            // All shapes hidden, wait a bit, then start showing
+            setTimeout(animateShow, cyclePause);
+            return;
+        }
+
+        // Use fadeOut to hide the shape smoothly by reducing opacity
+        shapes[index].fadeOut(hideDuration, function() {
+            // After hiding, animate the next shape after a small delay
+            setTimeout(() => animateHide(index + 1), delayBetweenShapes);
+        });
+    }
+
+    /**
+     * Shows the shapes sequentially.
+     * @param {number} index - The current shape index to animate.
+     */
+    function animateShow(index = 0) {
+        if (index >= totalShapes) {
+            // All shapes shown, wait a bit, then start hiding again (loop)
+            setTimeout(animateHide, cyclePause);
+            return;
+        }
+
+        // Use fadeIn to show the shape smoothly by restoring opacity
+        shapes[index].fadeIn(showDuration, function() {
+            // After showing, animate the next shape after a small delay
+            setTimeout(() => animateShow(index + 1), delayBetweenShapes);
+        });
+    }
+
+    // Start the animation loop when the page loads
+    animateHide();
+});
+    </script>
+</body>
+</html>
